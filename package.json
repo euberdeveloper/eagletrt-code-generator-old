@@ -1,0 +1,26 @@
+{
+  "name": "eagletrt-code-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/euberdeveloper/eagletrt-code-generator.git"
+  },
+  "author": "Eugenio Vinicio Berretta",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/euberdeveloper/eagletrt-code-generator/issues"
+  },
+  "homepage": "https://github.com/euberdeveloper/eagletrt-code-generator#readme",
+  "devDependencies": {
+    "@types/node": "^13.9.1",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "dree": "^2.4.12"
+  }
+}
