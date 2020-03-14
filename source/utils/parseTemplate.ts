@@ -1,8 +1,7 @@
-import { Code } from '../types';
+import { Options, Code } from '../types';
 
 function addInitialIndentation(row: string, block: string) {
-    const length = row.split('//')[0].length;
-    const indentation = Array(length).fill(' ');
+    const indentation = row.split('//')[0];
 
     return block
         // Split all the rows
@@ -13,7 +12,7 @@ function addInitialIndentation(row: string, block: string) {
         .join('\n');
 }
 
-export function parseTemplate(template: string, codes: Code[]): string {
+export function parseTemplate(template: string, codes: Code[], options: Options): string {
     return template
         // Split all the rows
         .split('\n')
@@ -22,7 +21,7 @@ export function parseTemplate(template: string, codes: Code[]): string {
             // Filter all the codes whose comment is in the row
             .filter(code => row.indexOf(code.comment) !== -1)
             // Map the code with the indentation
-            .map(code => addInitialIndentation(row, code.code))
+            .map(code => options.indent ? addInitialIndentation(row, code.code) : code.code)
             // Join the codes
             .join('')
         // If there are not special comments, return the unmodified row 

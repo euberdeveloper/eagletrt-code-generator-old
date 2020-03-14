@@ -22,7 +22,7 @@ export function transpile(src: string, codes: Code[], options: Options, logger: 
             // Get its code
             const template = readFileSync(file.path, 'utf-8');
             // Get the transpiled code, replacing all the special comments with generated code
-            const generated = parseTemplate(template, codes);
+            const generated = parseTemplate(template, codes, options);
             // Get the path of the generated file
             const generatedPath = file.path.replace('.template', '');
             // Write the generated file

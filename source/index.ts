@@ -19,4 +19,4 @@ export function generate(src?: string, structure?: string, options?: Options) {
     transpile(src, codes, options, logger);
 }
 
-generate();
+generate('./shit');

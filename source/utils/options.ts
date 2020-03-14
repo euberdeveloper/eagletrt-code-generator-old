@@ -3,7 +3,8 @@ import { Options } from '../types';
 const DEFAULT_OPTIONS: Options = {
     exclude: /node_modules/,
     extensions: undefined,
-    log: true
+    log: true,
+    indent: true
 };
 
 export function mergeOptions(options: Options): Options {

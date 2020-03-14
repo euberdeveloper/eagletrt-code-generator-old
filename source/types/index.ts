@@ -1,7 +1,8 @@
 export interface Options {
-    exclude?: RegExp | RegExp[],
-    extensions?: string[],
-    log?: boolean
+    exclude?: RegExp | RegExp[];
+    extensions?: string[];
+    log?: boolean;
+    indent?: boolean;
 };
 
 export interface Code {
