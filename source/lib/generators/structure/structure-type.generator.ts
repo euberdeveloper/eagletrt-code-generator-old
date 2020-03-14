@@ -10,6 +10,10 @@ class StructureTypeGenerator extends StructureGenerator {
         this.structs[this.cursor] += `${this.indentationTabs}${str}\n`;
     }
 
+    protected get structName(): string {
+        return this.keys.length === 1 ? this.keys[0] : `${this.keys.slice(1).join('_')}_data`;
+    }
+
     private get indentationTabs(): string {
         return Array(this.indentation)
             .fill('\t')
