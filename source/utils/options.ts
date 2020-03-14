@@ -1,7 +1,9 @@
 import { Options } from '../types';
 
 const DEFAULT_OPTIONS: Options = {
-    exclude: /node_modules/
+    exclude: /node_modules/,
+    extensions: undefined,
+    log: true
 };
 
 export function mergeOptions(options: Options): Options {

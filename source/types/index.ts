@@ -1,6 +1,7 @@
 export interface Options {
     exclude?: RegExp | RegExp[],
-    extensions?: string[]
+    extensions?: string[],
+    log?: boolean
 };
 
 export interface Code {
