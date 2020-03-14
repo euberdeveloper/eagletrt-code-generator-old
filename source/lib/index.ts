@@ -13,10 +13,10 @@ export { Options } from './types';
  * Fetches all the template files in the given folder (files whose extension is preceded
  * by .template) and generate the code inside the special comments (such as //{{COMMENT}})
  * @param src The folder where the template files will be fetched from. The default is the current folder.
- * @param structure The json file containing the structure, used by generators to dynamically generate code. The default is structure.json.
+ * @param structure The path to the json file containing the structure, used by generators to dynamically generate code. The default is structure.json.
  * @param options The options specifying things such as logging, indentation and filters on the files
  */
-export function generate(src?: string, structure?: string, options?: Options) {
+export function generate(src?: string, structure?: string, options?: Options): void {
     src = src || process.cwd();
     structure = structure || path.join(process.cwd(), 'structure.json');
     options = mergeOptions(options);

@@ -21,6 +21,7 @@
   "homepage": "https://github.com/euberdeveloper/eagletrt-code-generator#readme",
   "devDependencies": {
     "@types/node": "^13.9.1",
+    "@types/yargs": "^15.0.4",
     "@typescript-eslint/eslint-plugin": "^2.23.0",
     "@typescript-eslint/parser": "^2.23.0",
     "commitizen": "^4.0.3",
@@ -30,7 +31,8 @@
   },
   "dependencies": {
     "chalk": "^3.0.0",
-    "dree": "^2.4.12"
+    "dree": "^2.4.12",
+    "yargs": "^15.3.0"
   },
   "config": {
     "commitizen": {

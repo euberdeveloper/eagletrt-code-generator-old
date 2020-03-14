@@ -12,7 +12,7 @@ function addInitialIndentation(row: string, block: string): string {
         .join('\n');
 }
 
-export function parseTemplate(template: string, codes: Code[], options: Options): string {
+export function parseTemplate(template: string, codes: Code[], options: Options): string {    
     return template
         // Split all the rows
         .split('\n')
