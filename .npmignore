@@ -1,5 +1,6 @@
 node_modules
 source
+example
 .eslintrc.js
 .gitignore
 .travis.yml

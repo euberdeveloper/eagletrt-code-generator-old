@@ -7,7 +7,7 @@ export interface Options {
      */
     exclude?: RegExp | RegExp[];
     /**
-     * An array of string representing the extensions that will be considered. Default undefined, all extensions will be considered
+     * An array of strings representing the extensions that will be considered. Default undefined, all extensions will be considered
      */
     extensions?: string[];
     /**

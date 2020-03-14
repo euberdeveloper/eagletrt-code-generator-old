@@ -24,7 +24,7 @@ This module can be actually used both as a **local** and a **global** npm module
 Install the module with:
 
 ```bash
-npm install --save eagletrt-code-generator
+$ npm install --save eagletrt-code-generator
 ```
 
 Executing this script:
@@ -78,13 +78,13 @@ To see all the options, refer to the **api**.
 Install the module with:
 
 ```bash
-npm install -g eagletrt-code-generator
+$ npm install -g eagletrt-code-generator
 ```
 
 Executing:
 
 ```bash
-eagle generate --src code --structure .code/structure.json --extensions c h
+$ eagle generate --src code --structure .code/structure.json --extensions c h
 ```
 
 Will have the same result as the example with the local module.
@@ -92,7 +92,7 @@ Will have the same result as the example with the local module.
 The options are almost the same as in the **api** of the local module. To see all the cli options, run:
 
 ```bash
-eagle generate --help
+$ eagle generate --help
 ```
 
 ## The structure file
@@ -242,4 +242,27 @@ The generators are the **typescript classes** that replace a certain **special c
 | --- | --- | --- | --- |
 | {{GENERATE_STRUCTURE_DEALLOCATOR}} | Generates the code of the function that deallocates the structure | link | link |
 
-## 
+## API
+
+### generate
+
+**Syntax:**
+
+`generate(src, structure, options)`
+
+**Description:**
+
+Fetches all the template files in the given folder (files whose extension is preceded by .template) and generate the code inside the special comments (such as //{{COMMENT}})
+
+**Parameters:**
+
+* __src__: Optional. The folder where the template files will be fetched from. The default is the current folder.
+* __structure__: Optional. The path to the json file containing the structure, used by generators to dynamically generate code. The default is `structure.json`.
+* __options__: Optional. The options `object` specifying things such as logging, indentation and filters on the files
+
+**Options parameters:**
+
+* __exclude__: Default value: `/node_modules/`. A `RegExp` or an `array of RegExp` whose matching paths will be ignored.
+* __extensions__: Default value: `undefined`. An `array of strings` representing the extensions that will be considered. By default all extensions will be considered.
+* __log__: Default value: `true`. If the log will be shown on the terminal.
+* __indent__: Default value: `true`. If the generated code will be indented the same as the comment it will substitute.
