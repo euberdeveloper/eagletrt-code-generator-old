@@ -8,9 +8,9 @@ interface Key {
 class BsonGenerator extends Generator {
 
     private keys: Key[] = [];
-    private indentation: number = 0;
-    private depth: number = 0;
-    private forDepth: number = 0;
+    private indentation = 0;
+    private depth = 0;
+    private forDepth = 0;
 
     protected print(str: string): void {
         this.code += `${this.indentationTabs}${str}\n`;
@@ -76,9 +76,9 @@ class BsonGenerator extends Generator {
     private parseKey(key: Key): string {
         switch (key.type) {
             case'array':
-                return `[${key}]`;
+                return `[${key.key}]`;
             case 'object':
-                return `.${key}`;
+                return `.${key.key}`;
         }
     }
 
@@ -100,10 +100,9 @@ class BsonGenerator extends Generator {
     }
 
     private parseObject(data: any): void {
-        let oldDepth: string, newDepth: string;
-        oldDepth = this.parsedDepth;
+        const oldDepth = this.parsedDepth;
         this.depth++;
-        newDepth = this.parsedDepth;
+        const newDepth = this.parsedDepth;
 
         this.print(`BSON_APPEND_DOCUMENT_BEGIN(${oldDepth}, "${this.currentKey}", ${newDepth});`);
 
@@ -121,10 +120,9 @@ class BsonGenerator extends Generator {
     }
 
     private parseArray(data: any[]): void {
-        let oldDepth: string, newDepth: string;
-        oldDepth = this.parsedDepth;
+        const oldDepth = this.parsedDepth;
         this.depth++;
-        newDepth = this.parsedDepth;
+        const newDepth = this.parsedDepth;
         const counter = this.parsedForDepth;
         this.forDepth++;
 
