@@ -1,8 +1,11 @@
 {
   "name": "eagletrt-code-generator",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Generate dinamically code for the eagletrt telemetry",
+  "main": "dist/lib/index.js",
+  "bin": {
+    "eagle": "dist/bin/index.js"
+  },
   "scripts": {
     "transpile": "tsc --project source",
     "lint": "eslint source/**/*.ts",
