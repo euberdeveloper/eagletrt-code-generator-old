@@ -241,3 +241,5 @@ The generators are the **typescript classes** that replace a certain **special c
 | Comment | Description | template example | compiled example |
 | --- | --- | --- | --- |
 | {{GENERATE_STRUCTURE_DEALLOCATOR}} | Generates the code of the function that deallocates the structure | link | link |
+
+## 
