@@ -3,13 +3,17 @@ import { scan, ScanOptions } from 'dree';
 
 import { Options, Code } from '../types';
 import { parseTemplate } from './parseTemplate';
+import { Logger } from './logger';
 
-export function transpile(src: string, codes: Code[], options: Options): void { 
+
+export function transpile(src: string, codes: Code[], options: Options, logger: Logger): void { 
     // Get scan options
     const scanOptions: ScanOptions = {
         exclude: options.exclude,
         extensions: options.extensions
     };
+
+    logger.info('Generating files from templates');
     
     // Scan all the files in the directory tree of the src folder
     scan(src, scanOptions, file => {
@@ -23,6 +27,9 @@ export function transpile(src: string, codes: Code[], options: Options): void {
             const generatedPath = file.path.replace('.template', '');
             // Write the generated file
             writeFileSync(generatedPath, generated);
+            
+            // Log the event
+            logger.succ(file.relativePath.replace('.template', ''), 'GENERATED', true);
         }
     });
 }

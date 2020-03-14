@@ -1,4 +1,5 @@
 import { readFileSync } from 'fs';
+
 import { Code, Generator } from "../types";
 
 export function getCodes(structurePath: string, generators: typeof Generator[]): Code[] {
