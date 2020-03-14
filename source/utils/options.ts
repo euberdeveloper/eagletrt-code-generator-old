@@ -1,7 +1,7 @@
-import { Options } from '../interfaces';
+import { Options } from '../types';
 
 const DEFAULT_OPTIONS: Options = {
-    exclude: 'node_modules'
+    exclude: /node_modules/
 };
 
 export function mergeOptions(options: Options): Options {
@@ -10,10 +10,6 @@ export function mergeOptions(options: Options): Options {
 
     for (const key in DEFAULT_OPTIONS) {
         merged[key] = options[key] === undefined ? DEFAULT_OPTIONS[key] : options[key];
-    }
-
-    if (typeof merged.exclude === 'string') {
-        merged.exclude = [merged.exclude];
     }
     
     return merged;
