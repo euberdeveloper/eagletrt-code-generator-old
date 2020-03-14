@@ -1,6 +1,6 @@
 import { Options, Code } from '../types';
 
-function addInitialIndentation(row: string, block: string) {
+function addInitialIndentation(row: string, block: string): string {
     const indentation = row.split('//')[0];
 
     return block

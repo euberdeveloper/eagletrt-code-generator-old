@@ -28,13 +28,13 @@ export interface Code {
 export class Generator {
 
     protected comment: string;
-    protected code: string = '';
+    protected code = '';
     
     protected print(str: string): void {
         this.code += `${str}\n`;
     }
 
-    protected generate() {}
+    protected generate(): void {}
 
     constructor(protected structure: any) {}
 

@@ -4,24 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "transpile:source": "tsc --project source",
-    "transpile:test": "tsc --project test",
-    "transpile": "npm run transpile:source && npm run transpile:test",
-    "lint:source": "tslint --project source/tsconfig.json --config tslint.json",
-    "lint:test": "tslint --project test/tsconfig.json --config tslint.json",
-    "lint": "npm run lint:source && npm run lint:test",
-    "lint:fix:source": "tslint --project source/tsconfig.json --config tslint.json --fix",
-    "lint:fix:test": "tslint --project test/tsconfig.json --config tslint.json --fix",
-    "lint:fix": "npm run lint:fix:source && npm run lint:fix:test",
-    "db:clean": "mongo-cleaner clean -y",
-    "db:restore": "mongorestore test/mock --quiet",
-    "db:populate": "npm run db:clean && npm run db:restore",
-    "test": "mocha dist/test/test --reporter spec",
-    "nyc": "nyc --extension=ts --reporter=html --reporter=text --reporter=lcov -x \"source\\errors\" -x \"source/errors\" -x \"test\" npm run test",
-    "cover:coveralls": "nyc report --extension=ts --reporter=text-lcov | coveralls",
-    "cover:codecov": "nyc report --extension=ts --reporter=text-lcov > coverage.lcov && codecov",
-    "cover": "npm run cover:coveralls && npm run cover:codecov",
-    "docs:tree": "dree parse . --dest docs/tree --name tree --options docs/tree/dree.config.json",
+    "transpile": "tsc --project source",
+    "lint": "eslint source/**/*.ts",
+    "lint:fix": "eslint --fix source/**/*.ts",
     "commit": "git-cz"
   },
   "repository": {
@@ -36,10 +21,20 @@
   "homepage": "https://github.com/euberdeveloper/eagletrt-code-generator#readme",
   "devDependencies": {
     "@types/node": "^13.9.1",
+    "@typescript-eslint/eslint-plugin": "^2.23.0",
+    "@typescript-eslint/parser": "^2.23.0",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.1.0",
+    "eslint": "^6.8.0",
     "typescript": "^3.8.3"
   },
   "dependencies": {
     "chalk": "^3.0.0",
     "dree": "^2.4.12"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

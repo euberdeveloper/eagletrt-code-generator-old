@@ -2,7 +2,7 @@ import { scan } from 'dree';
 import { Generator } from '../types';
 import { Logger } from '../utils/logger';
 
-export default function (logger: Logger) {
+export default function (logger: Logger): typeof Generator[] {
     const generators: typeof Generator[] = [];
     logger.info('Fetching code generators');
 
