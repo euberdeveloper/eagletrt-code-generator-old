@@ -2,9 +2,9 @@ import { StructureGenerator } from './structureGenerator';
 
 class StructureTypeGenerator extends StructureGenerator {
 
-    private indentation: number = 0;
+    private indentation = 0;
     private structs: string[] = [];
-    private cursor: number = -1;
+    private cursor = -1;
 
     protected print(str: string): void {
         this.structs[this.cursor] += `${this.indentationTabs}${str}\n`;

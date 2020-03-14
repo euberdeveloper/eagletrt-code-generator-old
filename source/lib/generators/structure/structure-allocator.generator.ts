@@ -2,7 +2,7 @@ import { StructureGenerator } from './structureGenerator';
 
 class StructureAllocatorGenerator extends StructureGenerator {
 
-    private parse(data: any) {
+    private parse(data: any): void {
         for (const key in data) {
             if (Array.isArray(data[key])) {
                 this.keys.push(key);

@@ -5,9 +5,7 @@ export class StructureGenerator extends Generator {
     protected keys: string[] = [];
 
     protected get structName(): string {
-        return this.keys.length === 1 
-            ? this.keys[0]
-            : `${this.keys.slice(1).join('_')}_data`;
+        return `${this.keys.slice(1).join('_')}_data`;
     }
 
     protected get propName(): string {
