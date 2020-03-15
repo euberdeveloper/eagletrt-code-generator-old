@@ -228,7 +228,7 @@ The generators are the **typescript classes** that replace a certain **special c
 
 | Comment | Description | template example | compiled example |
 | --- | --- | --- | --- |
-| {{GENERATE_STRUCTURE_TYPE}} | Generates the c struct representing the structure | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_type.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_type.c) |
+| {{GENERATE_STRUCTURE_TYPE}} | Generates the c struct representing the structure | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_type.template.h) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_type.h) |
 
 ### structure-allocator.generator
 
