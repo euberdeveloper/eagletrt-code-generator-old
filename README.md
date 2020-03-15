@@ -234,7 +234,7 @@ The generators are the **typescript classes** that replace a certain **special c
 
 | Comment | Description | template example | compiled example |
 | --- | --- | --- | --- |
-| {{GENERATE_STRUCTURE_ALLOCATOR}} | Generates the code of the function that allocates the structure | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_allocator.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_allocator.template.c) |
+| {{GENERATE_STRUCTURE_ALLOCATOR}} | Generates the code of the function that allocates the structure | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_allocator.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_allocator.c) |
 
 ### structure-deallocator.generator
 
