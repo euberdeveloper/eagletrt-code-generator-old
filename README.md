@@ -222,25 +222,25 @@ The generators are the **typescript classes** that replace a certain **special c
 
 | Comment | Description | template example | compiled example |
 | --- | --- | --- | --- |
-| {{GENERATE_BSON}} | Generates the code of the function that given the structure variable, creates the bson object | link | link |
+| {{GENERATE_BSON}} | Generates the code of the function that given the structure variable, creates the bson object | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_bson.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_bson.c) |
 
 ### structure-type.generator
 
 | Comment | Description | template example | compiled example |
 | --- | --- | --- | --- |
-| {{GENERATE_STRUCTURE_TYPE}} | Generates the c struct representing the structure | link | link |
+| {{GENERATE_STRUCTURE_TYPE}} | Generates the c struct representing the structure | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_type.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_type.c) |
 
 ### structure-allocator.generator
 
 | Comment | Description | template example | compiled example |
 | --- | --- | --- | --- |
-| {{GENERATE_STRUCTURE_ALLOCATOR}} | Generates the code of the function that allocates the structure | link | link |
+| {{GENERATE_STRUCTURE_ALLOCATOR}} | Generates the code of the function that allocates the structure | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_allocator.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_allocator.template.c) |
 
 ### structure-deallocator.generator
 
 | Comment | Description | template example | compiled example |
 | --- | --- | --- | --- |
-| {{GENERATE_STRUCTURE_DEALLOCATOR}} | Generates the code of the function that deallocates the structure | link | link |
+| {{GENERATE_STRUCTURE_DEALLOCATOR}} | Generates the code of the function that deallocates the structure | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_deallocator.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_deallocator.c) |
 
 ## API
 
@@ -266,3 +266,7 @@ Fetches all the template files in the given folder (files whose extension is pre
 * __extensions__: Default value: `undefined`. An `array of strings` representing the extensions that will be considered. By default all extensions will be considered.
 * __log__: Default value: `true`. If the log will be shown on the terminal.
 * __indent__: Default value: `true`. If the generated code will be indented the same as the comment it will substitute.
+
+## Where was it used
+
+This module was used in this [repo](https://github.com/eagletrt/fenice-telemetria-sender)
