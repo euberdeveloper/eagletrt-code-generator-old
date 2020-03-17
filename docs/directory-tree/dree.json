@@ -1,0 +1,19 @@
+{
+    "showHidden": false,
+    "exclude": [
+        "node_modules",
+        "git",
+
+        "directory-tree\\",
+        "example\\",
+        "videos\\",
+        "dist\\bin",
+        "dist\\lib",
+        
+        "directory-tree/",
+        "example/",
+        "videos/",
+        "dist/bin",
+        "dist/lib"
+    ]
+}

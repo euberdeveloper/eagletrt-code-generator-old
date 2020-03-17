@@ -277,6 +277,47 @@ Fetches all the template files in the given folder (files whose extension is pre
 
 This module was used in the telemetry sender [repo](https://github.com/eagletrt/fenice-telemetria-sender) of eagletrt.
 
+
 <p align="center">
   <img src="https://github.com/euberdeveloper/eagletrt-code-generator/raw/master/docs/videos/demo.gif">
 </p>
+
+## Project structure
+
+Made with [dree](https://github.com/euberdeveloper/dree)
+
+```
+eagletrt-code-generator
+ ├── LICENSE
+ ├── README.md
+ ├── package-lock.json
+ ├── package.json
+ ├─> dist
+ ├─> docs
+ │   ├─> directory-tree
+ │   ├─> example
+ │   └─> videos
+ └─> source
+     ├─> bin
+     │   └── index.ts
+     ├─> lib
+     │   ├─> generators
+     │   │   ├─> bson
+     │   │   │   └── bson.generator.ts
+     │   │   ├── index.ts
+     │   │   └─> structure
+     │   │       ├── structure-allocator.generator.ts
+     │   │       ├── structure-deallocator.generator.ts
+     │   │       ├── structure-type.generator.ts
+     │   │       └── structureGenerator.ts
+     │   ├── index.ts
+     │   ├─> types
+     │   │   └── index.ts
+     │   └─> utils
+     │       ├── getCodes.ts
+     │       ├── logger.ts
+     │       ├── options.ts
+     │       ├── parseTemplate.ts
+     │       └── transpile.ts
+     └── tsconfig.json
+```

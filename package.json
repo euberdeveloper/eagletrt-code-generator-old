@@ -1,6 +1,6 @@
 {
   "name": "eagletrt-code-generator",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Generate dinamically code for the eagletrt telemetry",
   "main": "dist/lib/index.js",
   "bin": {
@@ -10,6 +10,7 @@
     "transpile": "tsc --project source",
     "lint": "eslint source/**/*.ts",
     "lint:fix": "eslint --fix source/**/*.ts",
+    "docs:tree": "dree parse . --dest docs/directory-tree --name tree --options docs/directory-tree/dree.json",
     "commit": "git-cz"
   },
   "repository": {
