@@ -1,6 +1,6 @@
 {
   "name": "eagletrt-code-generator",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Generate dinamically code for the eagletrt telemetry",
   "main": "dist/lib/index.js",
   "bin": {
@@ -21,13 +21,18 @@
   "bugs": {
     "url": "https://github.com/euberdeveloper/eagletrt-code-generator/issues"
   },
-  "keywords": ["eagletrt", "transpiler", "code-generator", "c-generator"],
+  "keywords": [
+    "eagletrt",
+    "transpiler",
+    "code-generator",
+    "c-generator"
+  ],
   "homepage": "https://github.com/euberdeveloper/eagletrt-code-generator#readme",
   "devDependencies": {
     "@types/node": "^13.9.1",
     "@types/yargs": "^15.0.4",
-    "@typescript-eslint/eslint-plugin": "^2.23.0",
-    "@typescript-eslint/parser": "^2.23.0",
+    "@typescript-eslint/eslint-plugin": "^2.24.0",
+    "@typescript-eslint/parser": "^2.24.0",
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "^3.1.0",
     "eslint": "^6.8.0",
@@ -36,7 +41,7 @@
   "dependencies": {
     "chalk": "^3.0.0",
     "dree": "^2.4.12",
-    "yargs": "^15.3.0"
+    "yargs": "^15.3.1"
   },
   "config": {
     "commitizen": {
