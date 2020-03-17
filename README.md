@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/euberdeveloper/eagletrt-code-generator.svg?branch=master)](https://travis-ci.org/euberdeveloper/eagletrt-code-generator)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![dependencies Status](https://david-dm.org/euberdeveloper/eagletrt-code-generator/status.svg)](https://david-dm.org/euberdeveloper/eagletrt-code-generator)
 [![License](https://img.shields.io/npm/l/eagletrt-code-generator.svg)](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/LICENSE)
 [![Types](https://img.shields.io/npm/types/eagletrt-code-generator.svg)](https://www.npmjs.com/package/eagletrt-code-generator)
 
