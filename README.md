@@ -228,25 +228,25 @@ The generators are the **typescript classes** that replace a certain **special c
 
 | Comment | Description | template example | compiled example |
 | --- | --- | --- | --- |
-| {{GENERATE_BSON}} | Generates the code of the function that given the structure variable, creates the bson object | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_bson.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_bson.c) |
+| {{GENERATE_BSON}} | Generates the code of the function that given the structure variable, creates the bson object | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/structure_service/structure_bson.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/structure_service/structure_bson.c) |
 
 ### structure-type.generator
 
 | Comment | Description | template example | compiled example |
 | --- | --- | --- | --- |
-| {{GENERATE_STRUCTURE_TYPE}} | Generates the c struct representing the structure | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_type.template.h) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_type.h) |
+| {{GENERATE_STRUCTURE_TYPE}} | Generates the c struct representing the structure | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/structure_service/structure_type.template.h) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/structure_service/structure_type.h) |
 
 ### structure-allocator.generator
 
 | Comment | Description | template example | compiled example |
 | --- | --- | --- | --- |
-| {{GENERATE_STRUCTURE_ALLOCATOR}} | Generates the code of the function that allocates the structure | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_allocator.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_allocator.c) |
+| {{GENERATE_STRUCTURE_ALLOCATOR}} | Generates the code of the function that allocates the structure | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/structure_service/structure_allocator.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/structure_service/structure_allocator.c) |
 
 ### structure-deallocator.generator
 
 | Comment | Description | template example | compiled example |
 | --- | --- | --- | --- |
-| {{GENERATE_STRUCTURE_DEALLOCATOR}} | Generates the code of the function that deallocates the structure | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_deallocator.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/example/structure_service/structure_deallocator.c) |
+| {{GENERATE_STRUCTURE_DEALLOCATOR}} | Generates the code of the function that deallocates the structure | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/structure_service/structure_deallocator.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/structure_service/structure_deallocator.c) |
 
 ## API
 
