@@ -275,4 +275,8 @@ Fetches all the template files in the given folder (files whose extension is pre
 
 ## Where was it used
 
-This module was used in this [repo](https://github.com/eagletrt/fenice-telemetria-sender)
+This module was used in the telemetry sender [repo](https://github.com/eagletrt/fenice-telemetria-sender) of eagletrt.
+
+<p align="center">
+  <img src="https://github.com/euberdeveloper/eagletrt-code-generator/raw/master/docs/videos/demo.gif">
+</p>
