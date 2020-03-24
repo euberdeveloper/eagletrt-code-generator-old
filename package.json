@@ -11,7 +11,7 @@
     "lint": "eslint source/**/*.ts",
     "lint:fix": "eslint --fix source/**/*.ts",
     "docs:html": "typedoc --mode library --inputFiles source/lib/index.ts --excludeExternals --excludeNotExported --includeVersion --tsconfig source/tsconfig.json --out docs/documentation/html",
-    "docs:html-dev": "typedoc --mode module --includeVersion --tsconfig source/tsconfig.json --out docs/documentation/html-dev",
+    "docs:html-dev": "typedoc --mode module --name 'eagletrt-code-generator - DEV' --includeVersion --tsconfig source/tsconfig.json --out docs/documentation/html-dev",
     "docs:deploy:html": "now docs/documentation/html --name eagletrt-code-generator --confirm --prod --token $NOW_TOKEN",
     "docs:deploy:html-dev": "now docs/documentation/html-dev --name eagletrt-code-generator-dev --confirm --prod --token $NOW_TOKEN",
     "docs:deploy": "npm run docs:deploy:html && npm run docs:deploy:html-dev",
