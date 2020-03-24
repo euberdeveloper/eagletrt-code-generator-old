@@ -23,7 +23,7 @@
     "type": "git",
     "url": "git+https://github.com/euberdeveloper/eagletrt-code-generator.git"
   },
-  "author": "Eugenio Vinicio Berretta",
+  "author": "Eugenio Vinicio Berretta <euberdeveloper@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/euberdeveloper/eagletrt-code-generator/issues"
