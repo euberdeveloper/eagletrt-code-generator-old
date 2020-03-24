@@ -10,8 +10,13 @@
     "transpile": "tsc --project source",
     "lint": "eslint source/**/*.ts",
     "lint:fix": "eslint --fix source/**/*.ts",
-    "docs:html": "typedoc typedoc --mode library --inputFiles source/lib/index.ts --excludeExternals --excludeNotExported --tsconfig source/tsconfig.json --out docs/documentation",
+    "docs:html": "typedoc --mode library --inputFiles source/lib/index.ts --excludeExternals --excludeNotExported --includeVersion --tsconfig source/tsconfig.json --out docs/documentation/html",
+    "docs:html-dev": "typedoc --mode module --includeVersion --tsconfig source/tsconfig.json --out docs/documentation/html-dev",
+    "docs:deploy:html": "now docs/documentation/html --name eagletrt-code-generator --confirm --prod --token $NOW_TOKEN",
+    "docs:deploy:html-dev": "now docs/documentation/html-dev --name eagletrt-code-generator-dev --confirm --prod --token $NOW_TOKEN",
+    "docs:deploy": "npm run docs:deploy:html && npm run docs:deploy:html-dev",
     "docs:tree": "dree parse . --dest docs/directory-tree --name tree --options docs/directory-tree/dree.json",
+    "docs": "npm run docs:html && npm run docs:html-dev && npm run docs:deploy",
     "commit": "git-cz"
   },
   "repository": {
