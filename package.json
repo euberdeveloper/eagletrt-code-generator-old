@@ -1,6 +1,6 @@
 {
   "name": "eagletrt-code-generator",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Generate dinamically code for the eagletrt telemetry",
   "main": "dist/lib/index.js",
   "bin": {
@@ -10,6 +10,7 @@
     "transpile": "tsc --project source",
     "lint": "eslint source/**/*.ts",
     "lint:fix": "eslint --fix source/**/*.ts",
+    "docs:html": "typedoc typedoc --mode library --inputFiles source/lib/index.ts --excludeExternals --excludeNotExported --tsconfig source/tsconfig.json --out docs/documentation",
     "docs:tree": "dree parse . --dest docs/directory-tree --name tree --options docs/directory-tree/dree.json",
     "commit": "git-cz"
   },
@@ -30,18 +31,19 @@
   ],
   "homepage": "https://github.com/euberdeveloper/eagletrt-code-generator#readme",
   "devDependencies": {
-    "@types/node": "^13.9.1",
+    "@types/node": "^13.9.3",
     "@types/yargs": "^15.0.4",
-    "@typescript-eslint/eslint-plugin": "^2.24.0",
-    "@typescript-eslint/parser": "^2.24.0",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "^3.1.0",
     "eslint": "^6.8.0",
+    "typedoc": "^0.17.0-3",
     "typescript": "^3.8.3"
   },
   "dependencies": {
     "chalk": "^3.0.0",
-    "dree": "^2.4.12",
+    "dree": "^2.4.14",
     "yargs": "^15.3.1"
   },
   "config": {
