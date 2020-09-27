@@ -1,6 +1,6 @@
 {
   "name": "eagletrt-code-generator",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Generate dinamically code for the eagletrt telemetry",
   "main": "dist/lib/index.js",
   "bin": {
@@ -48,9 +48,9 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
-    "chalk": "^3.0.0",
+    "chalk": "^4.1.0",
     "dree": "^2.4.16",
-    "yargs": "^15.4.1"
+    "yargs": "^16.0.3"
   },
   "config": {
     "commitizen": {
