@@ -1,4 +1,4 @@
-import { Generator, StructureGroup, StructureMessages, StructureMessagesDetails, , protected config: ConfigModel, StructurePrimitive, StructureModel } from '../../types';
+import { Generator, StructureGroup, StructureMessages, StructureMessagesDetails, ConfigModel, StructurePrimitive, StructureModel } from '../../types';
 
 interface Key {
     key: string;
