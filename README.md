@@ -39,7 +39,7 @@ Running this script:
 const generator = require('eagletrt-code-generator');
 
 const src = './code';
-const structure = './code/structure.json';
+const structure = './code/structure.model.json';
 const options = {
     extensions: ['c', 'h', 'cpp', 'hpp'],
     log: true
@@ -90,7 +90,7 @@ $ npm install -g eagletrt-code-generator
 Executing:
 
 ```bash
-$ eagle generate --src code --structure .code/structure.json --extensions c h
+$ eagle generate --src code --structure-model ./code/structure.model.json --config-model ./code/config.model.json --extensions c h
 ```
 
 Will have the same result as the example with the local module.
@@ -101,9 +101,9 @@ The options are almost the same as in the **api** of the local module. To see al
 $ eagle generate --help
 ```
 
-## The structure file
+## The structure model file
 
-The structure file is a **json** file that **represents how will be saved the data** in mongodb.
+The structure model file is a **json** file that **represents how will be saved the data** in mongodb.
 
 Every message is an object containing the **timestamp** of the message and its **value**. If a message contains more than a value, the value property will be **a nested object**.
 
@@ -263,7 +263,8 @@ Fetches all the template files in the given folder (files whose extension is pre
 **Parameters:**
 
 * __src__: Optional. The folder where the template files will be fetched from. The default is the current folder.
-* __structure__: Optional. The path to the json file containing the structure, used by generators to dynamically generate code. The default is `structure.json`.
+* __structure__: Optional. The path to the json file containing the structure model, used by generators to dynamically generate code about the data structure. The default is `structure.model.json`.
+* __config__: Optional. The path to the json file containing the config model, used by generators to dynamically generate code about the config parser. The default is `config.model.json`.
 * __options__: Optional. The options `object` specifying things such as logging, indentation and filters on the files
 
 **Options parameters:**

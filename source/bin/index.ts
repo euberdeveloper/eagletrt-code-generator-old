@@ -13,13 +13,14 @@ yargs
         async argv => {
             const args: any = argv;
             const src: string = args.src;
-            const structure: string = args.structure;
+            const structureModel: string = args.structureModel;
+            const configModel: string = args.configModel;
             const options: Options = {
                 extensions: args.extensions,
                 log: args.log,
                 indent: args.indent
             };
-            generate(src, structure, options);
+            generate(src, structureModel, configModel, options);
         }
     )
     .demandCommand(1, 'You must specify a command')
@@ -30,10 +31,17 @@ yargs
             default: process.cwd(),
             defaultDescription: 'The current folder'
         },
-        'structure': {
-            describe: 'The path to the json file containing the structure, used by generators to dynamically generate code. The default is structure.json',
+        'structure-model': {
+            alias: 's',
+            describe: 'The path to the json file containing the structure model, used by generators to dynamically generate code about the data structure. The default is structure.model.json.',
             type: 'string',
-            default: 'structure.json'
+            default: 'structure.model.json'
+        },
+        'config-model': {
+            alias: 'c',
+            describe: 'The path to the json file containing the config model, used by generators to dynamically generate code about the config parser. The default is config.model.json.',
+            type: 'string',
+            default: 'config.model.json'
         },
         'extensions': {
             describe: 'An array of string representing the extensions that will be considered. Default undefined, all extensions will be considered',

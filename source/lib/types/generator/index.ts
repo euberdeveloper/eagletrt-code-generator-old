@@ -1,3 +1,4 @@
+import { ConfigModel } from "../config";
 import { StructureModel } from "../structure";
 
 export interface Code {
@@ -16,7 +17,7 @@ export class Generator {
 
     protected generate(): void {}
 
-    constructor(protected structure: StructureModel) {}
+    constructor(protected structure: StructureModel, protected config: ConfigModel) {}
 
     public get generated(): Code {
         return {

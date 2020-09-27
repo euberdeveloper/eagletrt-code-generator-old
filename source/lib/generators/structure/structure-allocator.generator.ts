@@ -1,4 +1,4 @@
-import { StructureGroup, StructureMessages, StructureModel } from '../../types';
+import { ConfigModel, StructureGroup, StructureMessages, StructureModel } from '../../types';
 import { StructureGenerator } from './structureGenerator';
 
 class StructureAllocatorGenerator extends StructureGenerator {
@@ -28,8 +28,8 @@ class StructureAllocatorGenerator extends StructureGenerator {
         this.parse(this.structure);
     }
 
-    constructor(structure: StructureModel) {
-        super(structure);
+    constructor(structure: StructureModel, config: ConfigModel) {
+        super(structure, config);
         this.generate();
     }
 

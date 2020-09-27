@@ -1,4 +1,4 @@
-import { Generator, StructureGroup, StructureMessages, StructureMessagesDetails, StructureModel, StructurePrimitive } from '../../types';
+import { Generator, StructureGroup, StructureMessages, StructureMessagesDetails, , protected config: ConfigModel, StructurePrimitive, StructureModel } from '../../types';
 
 interface Key {
     key: string;
@@ -171,8 +171,8 @@ class BsonGenerator extends Generator {
         this.firstParse(this.structure);
     }
 
-    constructor(structure: StructureModel) {
-        super(structure);
+    constructor(structure: StructureModel, config: ConfigModel) {
+        super(structure, config);
         this.generate();
     }
 
