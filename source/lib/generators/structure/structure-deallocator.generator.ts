@@ -1,8 +1,9 @@
+import { StructureGroup, StructureMessages, StructureModel } from '../../types';
 import { StructureGenerator } from './structureGenerator';
 
 class StructureDeallocatorGenerator extends StructureGenerator {
 
-    private parse(data: any): void {
+    private parse(data: StructureGroup | StructureMessages): void {
         for (const key in data) {
             if (Array.isArray(data[key])) {
                 this.keys.push(key);
@@ -24,7 +25,7 @@ class StructureDeallocatorGenerator extends StructureGenerator {
         this.print(`free(data);`);
     }
 
-    constructor(structure: any) {
+    constructor(structure: StructureModel) {
         super(structure);
         this.generate();
     }

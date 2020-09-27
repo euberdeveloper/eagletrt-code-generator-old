@@ -1,4 +1,4 @@
-import { Generator } from '../../types';
+import { Generator, StructureModel } from '../../types';
 
 export class StructureGenerator extends Generator {
 
@@ -25,7 +25,7 @@ export class StructureGenerator extends Generator {
             .replace('.', '->');
     }
 
-    constructor(structure: any) {
+    constructor(structure: StructureModel) {
         super(structure);
     }
 

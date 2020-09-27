@@ -1,3 +1,4 @@
+import { StructureGroup, StructureMessages, StructureModel } from '../../types';
 import { StructureGenerator } from './structureGenerator';
 
 class StructureTypeGenerator extends StructureGenerator {
@@ -24,7 +25,7 @@ class StructureTypeGenerator extends StructureGenerator {
         this.structs.splice(this.cursor + 1, 0, '');
     }
 
-    private parse(data: any, name: string): void {
+    private parse(data: StructureGroup | StructureMessages, name: string): void {
         this.addStruct();
         this.keys.push(name);
         this.cursor++;
@@ -59,7 +60,7 @@ class StructureTypeGenerator extends StructureGenerator {
         this.code = this.structs.reverse().join('\n');
     }
 
-    constructor(structure: any) {
+    constructor(structure: StructureModel) {
         super(structure);
         this.generate();
     }

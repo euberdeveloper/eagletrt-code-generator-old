@@ -1,4 +1,4 @@
-import { Generator } from '../../types';
+import { Generator, StructureGroup, StructureMessages, StructureMessagesDetails, StructureModel, StructurePrimitive } from '../../types';
 
 interface Key {
     key: string;
@@ -52,7 +52,7 @@ class BsonGenerator extends Generator {
             .join('');
     }
 
-    private getDepth(structure: any): number {
+    private getDepth(structure: StructureGroup | StructureMessages | StructureMessagesDetails): number {
         let res: number;
         if (Array.isArray(structure)) {
             res = 1 + this.getDepth(structure[0]);
@@ -82,7 +82,7 @@ class BsonGenerator extends Generator {
         }
     }
 
-    private parsePrimitive(data: string): void {
+    private parsePrimitive(data: StructurePrimitive): void {
         switch (data) {
             case 'int':
                 this.print(`BSON_APPEND_INT32(${this.parsedDepth}, "${this.currentKey}", data${this.parsedKeys});`);
@@ -99,7 +99,7 @@ class BsonGenerator extends Generator {
         }
     }
 
-    private parseObject(data: any): void {
+    private parseObject(data: StructureGroup | StructureMessagesDetails): void {
         const oldDepth = this.parsedDepth;
         this.depth++;
         const newDepth = this.parsedDepth;
@@ -119,7 +119,7 @@ class BsonGenerator extends Generator {
 
     }
 
-    private parseArray(data: any[]): void {
+    private parseArray(data: StructureMessages): void {
         const oldDepth = this.parsedDepth;
         this.depth++;
         const newDepth = this.parsedDepth;
@@ -144,7 +144,7 @@ class BsonGenerator extends Generator {
         this.forDepth--;
     }
 
-    private parse(data: any): void {
+    private parse(data: StructurePrimitive | StructureMessages | StructureMessagesDetails | StructureGroup): void {
         if (Array.isArray(data)) {
             this.parseArray(data);
         }
@@ -156,7 +156,7 @@ class BsonGenerator extends Generator {
         }
     }
 
-    private firstParse(data: any): void {
+    private firstParse(data: StructureGroup): void {
         for (const key in data) {
             this.keys.push({ key, type: 'object' });
             this.parse(data[key]);
@@ -171,7 +171,7 @@ class BsonGenerator extends Generator {
         this.firstParse(this.structure);
     }
 
-    constructor(structure: any) {
+    constructor(structure: StructureModel) {
         super(structure);
         this.generate();
     }
