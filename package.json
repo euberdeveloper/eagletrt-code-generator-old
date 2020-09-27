@@ -34,7 +34,7 @@
     "code-generator",
     "c-generator"
   ],
-  "homepage": "https://github.com/euberdeveloper/eagletrt-code-generator#readme",
+  "homepage": "https://eagletrt-code-generator.euberdeveloper.now.sh",
   "devDependencies": {
     "@types/node": "^14.11.2",
     "@types/yargs": "^15.0.7",
