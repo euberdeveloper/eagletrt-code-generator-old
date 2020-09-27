@@ -1,6 +1,6 @@
 {
   "name": "eagletrt-code-generator",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "Generate dinamically code for the eagletrt telemetry",
   "main": "dist/lib/index.js",
   "bin": {
