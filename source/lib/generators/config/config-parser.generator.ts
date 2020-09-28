@@ -65,7 +65,6 @@ class ConfigParserGenerator extends ConfigGenerator {
                     break;
 
                 case EConfigType.ConfigDouble:
-                    //TODO: implement getDoubleValue
                     ifContent = [
                         `config${prefixName}${k} = getDoubleValue(json_tokens, json_string, i);`
                     ]
