@@ -10,13 +10,13 @@ class ConfigParserGenerator extends ConfigGenerator {
     }
 
     private printIf(condition: string, content: string[], indentation = 0, elseIf = false, onlyElse = false): string {
-        return this.printLine(`${elseIf ? 'else ' : ''} ${onlyElse ? '' : `if (${condition})`} {`, indentation++)
+        return this.printLine(`${elseIf ? 'else ' : ''}${onlyElse ? '' : `if (${condition}) `}{`, indentation++)
             + content.map(line => this.printLine(line, indentation)).join("")
             + this.printLine("}", --indentation);
     }
 
-    private getFunctionName(objName: string): string {
-        return `parse${objName.charAt(0).toUpperCase()}${objName.slice(1)}Object`;
+    private getFunctionName(objName: string, isRoot = false): string {
+        return isRoot ? `parseJsonTokens` : `parse${objName.charAt(0).toUpperCase()}${objName.slice(1)}Object`;
     }
 
     private mainIfSwitchGenerator(data: ConfigModel, prefixName: string, objName: string, indentation: number): string {
@@ -99,7 +99,7 @@ class ConfigParserGenerator extends ConfigGenerator {
     private parse(data: ConfigModel, prefixName: string, objName: string, isRootObject = false): void {
         let indentation = 0;
 
-        let code = this.printLine(`static void ${this.getFunctionName(objName)}(const jsmntok_t *json_tokens, const char *json_string, config_t *config, ${isRootObject ? `int tokens_length` : `int *i`}) {`, indentation++);
+        let code = this.printLine(`static void ${this.getFunctionName(objName, isRootObject)}(const jsmntok_t *json_tokens, const char *json_string, config_t *config, ${isRootObject ? `int tokens_length` : `int *i`}) {`, indentation++);
 
         if (!isRootObject) {
             code += this.printLine(`++(*i);`, indentation);
@@ -131,58 +131,3 @@ class ConfigParserGenerator extends ConfigGenerator {
 }
 
 export { ConfigParserGenerator as generator };
-
-
-function test(): void {
-    const res = new ConfigParserGenerator(null, {
-        "mqtt": {
-            "host": "localhost",
-            "port": 1883,
-            "data_topic": "telemetria",
-            "log_topic": "telemetria_log"
-        },
-
-        "mongodb": {
-            "host": "localhost",
-            "port": 27017,
-            "db": "eagle_test",
-            "collection": "scimmera"
-        },
-
-        "gps": {
-            "plugged": 1,
-            "simulated": 1,
-            "interface": "/dev/pts/3"
-        },
-
-        "pilots": [
-            "default",
-            "Ivan",
-            "Filippo",
-            "Mirco",
-            "Nicola",
-            "Davide"
-        ],
-
-        "races": [
-            "default",
-            "Autocross",
-            "Skidpad",
-            "Endurance",
-            "Acceleration"
-        ],
-
-        "circuits": [
-            "default",
-            "Vadena",
-            "Varano",
-            "Povo"
-        ],
-
-        "can_interface": "can0",
-        "sending_rate": 500,
-        "verbose": 0
-    });
-    console.log(res.generated.code);
-}
-test();
