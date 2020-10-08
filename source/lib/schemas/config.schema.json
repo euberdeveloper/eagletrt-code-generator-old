@@ -2,7 +2,7 @@
     "$id": "https://eagletrt.it/telemetria-code-generator/config.schema.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "Config Model",
-    "description": "The schema for the config.model.json of the telemetria-code-generator",
+    "description": "v1.0 - 2020/10/08 / The schema for the config.model.json of the telemetria-code-generator",
     "type": "object",
   
     "definitions": {
@@ -31,11 +31,19 @@
                 { "$ref": "#/definitions/primitive-array" },
                 { 
                     "type": "object",
-                    "additionalProperties": { "$ref": "#/definitions/recursive-model" }
+                    "$comment": "TODO: sistemare pattern",
+                    "patternProperties": { 
+                        "^[a-z,A-Z]*$": { "$ref": "#/definitions/recursive-model" }
+                    },
+                    "additionalProperties": false
                 }
             ]
         }
     },
   
-    "additionalProperties": { "$ref": "#/definitions/recursive-model" }
+    "$comment": "TODO: sistemare pattern",
+    "patternProperties": { 
+        "^[a-z,A-Z]*$": { "$ref": "#/definitions/recursive-model" }
+    },
+    "additionalProperties": false
 }
