@@ -1,0 +1,41 @@
+{
+    "$id": "https://eagletrt.it/telemetria-code-generator/config.schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Config Model",
+    "description": "The schema for the config.model.json of the telemetria-code-generator",
+    "type": "object",
+  
+    "definitions": {
+        "primitive-string": { "type": "string" },
+        "primitive-integer": { "type": "integer" },
+        "primitive-double": { 
+            "allOf": [
+                { "not": { "type": "integer" } },
+                { "type": "number" }
+            ]
+        },
+        "primitive-array": {
+            "type": "array",
+            "minItems": 1,
+            "oneOf": [
+                { "items": { "$ref": "#/definitions/primitive-string" } },
+                { "items": { "$ref": "#/definitions/primitive-integer" } },
+                { "items": { "$ref": "#/definitions/primitive-double" } }
+            ]
+        },
+        "recursive-model": {
+            "oneOf": [
+                { "$ref": "#/definitions/primitive-string" },
+                { "$ref": "#/definitions/primitive-integer" },
+                { "$ref": "#/definitions/primitive-double" },
+                { "$ref": "#/definitions/primitive-array" },
+                { 
+                    "type": "object",
+                    "additionalProperties": { "$ref": "#/definitions/recursive-model" }
+                }
+            ]
+        }
+    },
+  
+    "additionalProperties": { "$ref": "#/definitions/recursive-model" }
+}
