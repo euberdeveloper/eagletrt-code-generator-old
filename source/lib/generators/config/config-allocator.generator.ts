@@ -1,61 +1,51 @@
-import { ConfigModel, EConfigType, StructureModel } from '../../types';
+import { ConfigModel, StructureModel, ConfigPrimitiveArray, ConfigPrimitive } from '../../types';
 import { ConfigGenerator } from './configGenerator';
 
 class ConfigAllocatorGenerator extends ConfigGenerator {
 
-    private structs: string[] = [];
+    private parsePrimitive(defaultValue: ConfigPrimitive): void {
+        const type = this.getPrimitiveType(defaultValue);
+        const handledDefaultValue = (type === 'char*') ? `strdup("${defaultValue}")` : defaultValue;
+        this.print(`${this.propName} = ${handledDefaultValue};`);
+    }
 
-    private codeLine(c: string): string {
-        return `\t${c}\n`;
+    private parsePrimitiveArray(defaultValue: ConfigPrimitiveArray): void {
+        const type = this.getPrimitiveType(defaultValue[0]);
+        this.print(`${this.propCountName} = ${defaultValue.length};`)
+        this.print(`${this.propName} = (${type}*) malloc(sizeof(${type}) * ${this.propCountName});`);
+
+        defaultValue.forEach((el: string | number, index: number) => {
+            this.keys.push(index);
+            this.parsePrimitive(el);
+            this.keys.pop();
+        });
     }
 
     private parse(data: ConfigModel, name: string): void {
-        let code = "";
+        this.keys.push(name);
 
-        for (const k in data) {
-            switch (this.getConfigType(data[k])) {
-                case EConfigType.ConfigArray:
-                    code += this.codeLine(`${name}${k}_count = ${(data[k] as Array<string>).length};`)
-                    code += this.codeLine(`${name}${k} = (char**) malloc(sizeof(char*) * ${name}${k}_count);`);
-                    const arrType = this.getArrayPrimitiveType(data[k] as Array<any>);
-                    for (let i = 0; i < (data[k] as Array<string>).length; i++) {
-                        if (arrType === EConfigType.ConfigString)
-                            code += this.codeLine(`${name}${k}[${i}] = strdup("${data[k][i]}");`);
-                        else if (arrType === EConfigType.ConfigInt || arrType === EConfigType.ConfigDouble)
-                            code += this.codeLine(`${name}${k}[${i}] = ${data[k][i]};`);
-                    }
-                    code += '\n';
-                    break;
-
-                case EConfigType.ConfigObject:
-                    this.parse(data[k] as ConfigModel, `${name}${k}.`);
-                    break;
-
-                case EConfigType.ConfigString:
-                    code += this.codeLine(`${name}${k} = strdup("${data[k]}");`);
-                    break;
-
-                case EConfigType.ConfigInt:
-                case EConfigType.ConfigDouble:
-                    code += this.codeLine(`${name}${k} = ${data[k].toString()};`);
-                    break;
-
-                case EConfigType.Unknown:
-                default:
-                    break;
+        for (const key in data) {
+            if (Array.isArray(data[key])) {
+                this.keys.push(key);
+                this.parsePrimitiveArray(data[key] as ConfigPrimitiveArray);
+                this.keys.pop();
+            }
+            else if (typeof data[key] === 'object') {
+                this.parse(data[key] as ConfigModel, key);
+            }
+            else {
+                this.keys.push(key);
+                this.parsePrimitive(data[key] as ConfigPrimitive);
+                this.keys.pop();
             }
         }
 
-        this.structs.push(code);
+        this.keys.pop();
     }
 
     protected comment = '{{GENERATE_CONFIG_ALLOCATOR}}';
     protected generate(): void {
-        const name = "config";
-        this.parse(this.config, `${name}->`);
-        this.code = `\tconfig_t *${name} = (config_t*) malloc(sizeof(config_t));\n\n`
-            + this.structs.join('\n') + "\n"
-            + `\treturn ${name};\n`;
+        this.parse(this.config, `config`);
     }
 
     constructor(structure: StructureModel, config: ConfigModel) {

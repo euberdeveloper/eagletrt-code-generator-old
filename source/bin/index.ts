@@ -18,7 +18,8 @@ yargs
             const options: Options = {
                 extensions: args.extensions,
                 log: args.log,
-                indent: args.indent
+                indent: args.indent,
+                exclude: args.exclude
             };
             generate(src, structureModel, configModel, options);
         }
@@ -58,6 +59,12 @@ yargs
             describe: 'If the generated code will be indented the same as the comment it will substitute',
             type: 'boolean',
             default: true
+        },
+        'exclude': {
+            describe: 'An array of strings that will be converted to RegExp, whose matching paths will be ignored. Default: "node_modules"',
+            type: 'array',
+            default: [ 'node_modules' ],
+            coerce: value => value.map((el: string) => new RegExp(el))
         }
     })
     .epilogue('For more information, find our manual at https://github.com/euberdeveloper/eagletrt-code-generator#readme')

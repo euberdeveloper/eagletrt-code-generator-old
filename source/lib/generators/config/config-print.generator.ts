@@ -1,79 +1,51 @@
-import { ConfigModel, EConfigType, StructureModel } from '../../types';
+import { ConfigModel, ConfigPrimitive, ConfigPrimitiveArray, StructureModel } from '../../types';
 import { ConfigGenerator } from './configGenerator';
 
 class ConfigPrintGenerator extends ConfigGenerator {
 
-    private printLine: string[] = [];
-
-    private addPrintPrimitiveLine(propName: string, type: EConfigType): void {
-        let placeholder = "";
-        switch (type) {
-            case EConfigType.ConfigString:
-                placeholder = "%s";
-                break;
-
-            case EConfigType.ConfigInt:
-                placeholder = "%d";
-                break;
-
-            case EConfigType.ConfigDouble:
-                placeholder = "%f";
-                break;
-
-            case EConfigType.Unknown:
-            default:
-                return;
-        }
-
-        this.printLine.push(`printf("${propName}:\\t${placeholder}\\n", ${propName});`);
+    private printPrimitive(data: ConfigPrimitive) {
+        const formatter = this.getPrimitivePrintfFormatter(data);
+        this.print(`printf("${this.propName}:\\t${formatter}\\n", ${this.propName});`);
     }
 
-    private addPrintPrimitiveArrayLine(propName: string, arrType: EConfigType): void {
-        switch (arrType) {
-            case EConfigType.ConfigString:
-                this.printLine.push(`printf("${propName}: ");`);
-                this.printLine.push(`printStringsArray(${propName}, ${propName}_count);`);
-                break;
-
-            case EConfigType.ConfigInt:
-            case EConfigType.ConfigDouble:
-            //TODO: implement c print
-            case EConfigType.Unknown:
-            default:
-                break;
+    private printPrimitiveArray(data: ConfigPrimitiveArray) {
+        const type = this.getPrimitiveType(data[0]);
+        this.print(`printf("${this.propName}: ");`);
+        
+        if (type === "char*") {
+            this.print(`printStringsArray(${this.propName}, ${this.propCountName});`);
         }
-
+        else if (type === 'double') {
+            this.print(`printDoubleArray(${this.propName});`);
+        }
+        else if (type === 'int') {
+            this.print(`printIntArray(${this.propName});`);
+        }
     }
 
     private parse(data: ConfigModel, name: string): void {
-        for (const k in data) {
-            const type = this.getConfigType(data[k]);
-            switch (type) {
-                case EConfigType.ConfigArray:
-                    this.addPrintPrimitiveArrayLine(`${name}${k}`, this.getArrayPrimitiveType(data[k] as Array<any>));
-                    break;
-
-                case EConfigType.ConfigObject:
-                    this.parse(data[k] as ConfigModel, `${name}${k}.`)
-                    break;
-
-                case EConfigType.ConfigString:
-                case EConfigType.ConfigInt:
-                case EConfigType.ConfigDouble:
-                    this.addPrintPrimitiveLine(`${name}${k}`, type);
-                    break;
-
-                case EConfigType.Unknown:
-                default:
-                    break;
+        this.keys.push(name);
+        for (const key in data) {
+            if (Array.isArray(data[key])) {
+                this.keys.push(key);
+                this.printPrimitiveArray(data[key] as ConfigPrimitiveArray);
+                this.keys.pop();
+            }
+            else if (typeof data[key] === 'object') {
+                this.parse(data[key] as ConfigModel, key);
+            }
+            else {
+                this.keys.push(key);
+                this.printPrimitive(data[key] as ConfigPrimitive);
+                this.keys.pop();
             }
         }
+        this.keys.pop();
     }
 
     protected comment = '{{GENERATE_CONFIG_PRINT}}';
     protected generate(): void {
-        this.parse(this.config, 'config->');
-        this.code = this.printLine.map(s => "\t" + s).join('\n');
+        this.parse(this.config, 'config');
     }
 
     constructor(structure: StructureModel, config: ConfigModel) {
