@@ -2,6 +2,7 @@ import * as path from 'path';
 
 import { Options } from './types';
 import { Logger } from './utils/logger';
+import { checkModelsSchema } from './utils/checkModelsSchema';
 import { mergeOptions } from './utils/options';
 import { getCodes } from './utils/getCodes';
 import { transpile } from './utils/transpile';
@@ -21,10 +22,11 @@ export function generate(src?: string, structureModel?: string, configModel?: st
     src = src || process.cwd();
     structureModel = structureModel || path.join(process.cwd(), 'structure.model.json');
     configModel = configModel || path.join(process.cwd(), 'config.model.json');
+    const { structureModelObject, configModelObject } = checkModelsSchema(structureModel, configModel);
     options = mergeOptions(options);
 
     const logger = new Logger(options);
     const generators = getGenerators(logger);
-    const codes = getCodes(structureModel, configModel, generators);
+    const codes = getCodes(structureModelObject, configModelObject, generators);
     transpile(src, codes, options, logger);
 }

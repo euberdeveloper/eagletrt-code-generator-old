@@ -35,7 +35,7 @@
                     "type": "object",
                     "$comment":  "TODO: sistemare pattern; TODO: no equal properties",
                     "patternProperties": { 
-                        "^[a-z,A-Z]*$": { "$ref": "#/definitions/recursive-model" }
+                        "^[a-z,A-Z,_]*$": { "$ref": "#/definitions/recursive-model" }
                     },
                     "additionalProperties": false
                 }
@@ -46,7 +46,7 @@
     "type": "object",
     "$comment": "TODO: sistemare pattern; TODO: no equal properties",
     "patternProperties": { 
-        "^[a-z,A-Z]*$": { "$ref": "#/definitions/recursive-model" }
+        "^[a-z,A-Z,_]*$": { "$ref": "#/definitions/recursive-model" }
     },
     "additionalProperties": false
 }

@@ -17,20 +17,20 @@ typedef struct {
 typedef struct {
 	long timestamp;
 	int value;
-} inverters_right_temperature_igbt_data;
+} inverters_right_temperatureigbt_data;
 
 typedef struct {
 	long timestamp;
 	int value;
-} inverters_right_temperature_motors_data;
+} inverters_right_temperaturemotors_data;
 
 typedef struct {
 	inverters_right_speed_data *speed;
 	int speed_count;
-	inverters_right_temperature_igbt_data *temperature_igbt;
-	int temperature_igbt_count;
-	inverters_right_temperature_motors_data *temperature_motors;
-	int temperature_motors_count;
+	inverters_right_temperatureigbt_data *temperatureigbt;
+	int temperatureigbt_count;
+	inverters_right_temperaturemotors_data *temperaturemotors;
+	int temperaturemotors_count;
 } inverters_right_data;
 
 typedef struct {
@@ -41,20 +41,20 @@ typedef struct {
 typedef struct {
 	long timestamp;
 	int value;
-} inverters_left_temperature_igbt_data;
+} inverters_left_temperatureigbt_data;
 
 typedef struct {
 	long timestamp;
 	int value;
-} inverters_left_temperature_motors_data;
+} inverters_left_temperaturemotors_data;
 
 typedef struct {
 	inverters_left_speed_data *speed;
 	int speed_count;
-	inverters_left_temperature_igbt_data *temperature_igbt;
-	int temperature_igbt_count;
-	inverters_left_temperature_motors_data *temperature_motors;
-	int temperature_motors_count;
+	inverters_left_temperatureigbt_data *temperatureigbt;
+	int temperatureigbt_count;
+	inverters_left_temperaturemotors_data *temperaturemotors;
+	int temperaturemotors_count;
 } inverters_left_data;
 
 typedef struct {
@@ -66,112 +66,112 @@ typedef struct {
 	double max;
 	double min;
 	double average;
-} bms_hv_temperature_value_data;
+} bmshv_temperature_value_data;
 
 typedef struct {
 	long timestamp;
-	bms_hv_temperature_value_data value;
-} bms_hv_temperature_data;
+	bmshv_temperature_value_data value;
+} bmshv_temperature_data;
 
 typedef struct {
 	double max;
 	double min;
 	double total;
-} bms_hv_voltage_value_data;
+} bmshv_voltage_value_data;
 
 typedef struct {
 	long timestamp;
-	bms_hv_voltage_value_data value;
-} bms_hv_voltage_data;
+	bmshv_voltage_value_data value;
+} bmshv_voltage_data;
 
 typedef struct {
 	double current;
 	double pow;
-} bms_hv_current_value_data;
+} bmshv_current_value_data;
 
 typedef struct {
 	long timestamp;
-	bms_hv_current_value_data value;
-} bms_hv_current_data;
+	bmshv_current_value_data value;
+} bmshv_current_data;
 
 typedef struct {
-	int fault_id;
-	int fault_index;
-} bms_hv_errors_value_data;
-
-typedef struct {
-	long timestamp;
-	bms_hv_errors_value_data value;
-} bms_hv_errors_data;
-
-typedef struct {
-	int fault_id;
-	int fault_index;
-} bms_hv_warnings_value_data;
+	int faultid;
+	int faultindex;
+} bmshv_errors_value_data;
 
 typedef struct {
 	long timestamp;
-	bms_hv_warnings_value_data value;
-} bms_hv_warnings_data;
+	bmshv_errors_value_data value;
+} bmshv_errors_data;
 
 typedef struct {
-	bms_hv_temperature_data *temperature;
+	int faultid;
+	int faultindex;
+} bmshv_warnings_value_data;
+
+typedef struct {
+	long timestamp;
+	bmshv_warnings_value_data value;
+} bmshv_warnings_data;
+
+typedef struct {
+	bmshv_temperature_data *temperature;
 	int temperature_count;
-	bms_hv_voltage_data *voltage;
+	bmshv_voltage_data *voltage;
 	int voltage_count;
-	bms_hv_current_data *current;
+	bmshv_current_data *current;
 	int current_count;
-	bms_hv_errors_data *errors;
+	bmshv_errors_data *errors;
 	int errors_count;
-	bms_hv_warnings_data *warnings;
+	bmshv_warnings_data *warnings;
 	int warnings_count;
-} bms_hv_data;
+} bmshv_data;
 
 typedef struct {
 	double voltage;
 	double temperature;
-} bms_lv_values_value_data;
+} bmslv_values_value_data;
 
 typedef struct {
 	long timestamp;
-	bms_lv_values_value_data value;
-} bms_lv_values_data;
+	bmslv_values_value_data value;
+} bmslv_values_data;
 
 typedef struct {
 	long timestamp;
 	int value;
-} bms_lv_errors_data;
+} bmslv_errors_data;
 
 typedef struct {
-	bms_lv_values_data *values;
+	bmslv_values_data *values;
 	int values_count;
-	bms_lv_errors_data *errors;
+	bmslv_errors_data *errors;
 	int errors_count;
-} bms_lv_data;
+} bmslv_data;
 
 typedef struct {
-	double latitude_GGA_safe;
-	double longitude_GGA_safe;
-	double latitude_GGA;
-	double longitude_GGA;
-	double altitude_GGA;
-	char* ns_indicator_GGA;
-	char* ew_indicator_GGA;
-	char* utc_time_GGA;
-	double latitude_GLL;
-	double longitude_GLL;
-	char* ns_indicator_GLL;
-	char* ew_indicator_GLL;
-	char* utc_time_GLL;
-	double ground_speed_knots_VTG;
-	double ground_speed_human_VTG;
-	double latitude_RMC;
-	double longitude_RMC;
-	char* ns_indicator_RMC;
-	char* ew_indicator_RMC;
-	char* utc_time_RMC;
-	char* date_RMC;
-	double ground_speed_knots_RMC;
+	double latitudeGGAsafe;
+	double longitudeGGAsafe;
+	double latitudeGGA;
+	double longitudeGGA;
+	double altitudeGGA;
+	char* nsindicatorGGA;
+	char* ewindicatorGGA;
+	char* utctimeGGA;
+	double latitudeGLL;
+	double longitudeGLL;
+	char* nsindicatorGLL;
+	char* ewindicatorGLL;
+	char* utctimeGLL;
+	double groundspeedknotsVTG;
+	double groundspeedhumanVTG;
+	double latitudeRMC;
+	double longitudeRMC;
+	char* nsindicatorRMC;
+	char* ewindicatorRMC;
+	char* utctimeRMC;
+	char* dateRMC;
+	double groundspeedknotsRMC;
 } gps_new_value_data;
 
 typedef struct {
@@ -180,10 +180,10 @@ typedef struct {
 } gps_new_data;
 
 typedef struct {
-	double latitude_m;
-	int latitude_o;
-	double longitude_m;
-	int longitude_o;
+	double latitudem;
+	int latitudeo;
+	double longitudem;
+	int longitudeo;
 	double speed;
 	double altitude;
 } gps_old_location_value_data;
@@ -207,15 +207,15 @@ typedef struct {
 typedef struct {
 	long timestamp;
 	int value;
-} gps_old_true_track_mode_data;
+} gps_old_truetrackmode_data;
 
 typedef struct {
 	gps_old_location_data *location;
 	int location_count;
 	gps_old_time_data *time;
 	int time_count;
-	gps_old_true_track_mode_data *true_track_mode;
-	int true_track_mode_count;
+	gps_old_truetrackmode_data *truetrackmode;
+	int truetrackmode_count;
 } gps_old_data;
 
 typedef struct {
@@ -229,40 +229,40 @@ typedef struct {
 	double y;
 	double z;
 	double scale;
-} imu_gyro_value_data;
+} imugyro_value_data;
 
 typedef struct {
 	long timestamp;
-	imu_gyro_value_data value;
-} imu_gyro_data;
+	imugyro_value_data value;
+} imugyro_data;
 
 typedef struct {
 	double x;
 	double y;
 	double z;
 	double scale;
-} imu_accel_value_data;
+} imuaccel_value_data;
 
 typedef struct {
 	long timestamp;
-	imu_accel_value_data value;
-} imu_accel_data;
+	imuaccel_value_data value;
+} imuaccel_data;
 
 typedef struct {
 	double speed;
 	double speedms;
-} front_wheels_encoder_value_data;
+} frontwheelsencoder_value_data;
 
 typedef struct {
 	long timestamp;
-	front_wheels_encoder_value_data value;
-} front_wheels_encoder_data;
+	frontwheelsencoder_value_data value;
+} frontwheelsencoder_data;
 
 typedef struct {
 	double meters;
 	double rotations;
 	double angle;
-	double clock_period;
+	double clockperiod;
 } distance_value_data;
 
 typedef struct {
@@ -283,48 +283,48 @@ typedef struct {
 typedef struct {
 	long timestamp;
 	double value;
-} steering_wheel_encoder_data;
+} steeringwheel_encoder_data;
 
 typedef struct {
 	int control;
 	int cooling;
 	int map;
-} steering_wheel_gears_value_data;
+} steeringwheel_gears_value_data;
 
 typedef struct {
 	long timestamp;
-	steering_wheel_gears_value_data value;
-} steering_wheel_gears_data;
+	steeringwheel_gears_value_data value;
+} steeringwheel_gears_data;
 
 typedef struct {
-	steering_wheel_encoder_data *encoder;
+	steeringwheel_encoder_data *encoder;
 	int encoder_count;
-	steering_wheel_gears_data *gears;
+	steeringwheel_gears_data *gears;
 	int gears_count;
 	int marker;
-} steering_wheel_data;
+} steeringwheel_data;
 
 typedef struct {
 	int id;
 	long timestamp;
 	char* sessionName;
 	inverters_data inverters;
-	bms_hv_data bms_hv;
-	bms_lv_data bms_lv;
+	bmshv_data bmshv;
+	bmslv_data bmslv;
 	gps_data gps;
-	imu_gyro_data *imu_gyro;
-	int imu_gyro_count;
-	imu_accel_data *imu_accel;
-	int imu_accel_count;
-	front_wheels_encoder_data *front_wheels_encoder;
-	int front_wheels_encoder_count;
+	imugyro_data *imugyro;
+	int imugyro_count;
+	imuaccel_data *imuaccel;
+	int imuaccel_count;
+	frontwheelsencoder_data *frontwheelsencoder;
+	int frontwheelsencoder_count;
 	distance_data *distance;
 	int distance_count;
 	throttle_data *throttle;
 	int throttle_count;
 	brake_data *brake;
 	int brake_count;
-	steering_wheel_data steering_wheel;
+	steeringwheel_data steeringwheel;
 } data_t;
 
 
