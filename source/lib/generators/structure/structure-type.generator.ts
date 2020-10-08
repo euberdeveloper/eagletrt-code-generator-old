@@ -37,6 +37,7 @@ class StructureTypeGenerator extends StructureGenerator {
                 this.parse(data[key][0], key);
                 this.print(`${this.structName} *${key};`);
                 this.print(`int ${this.countName};`);
+                this.print(`int ${this.sizeName};`);
                 this.keys.pop();
             }
             else if (typeof data[key] === 'object') {
