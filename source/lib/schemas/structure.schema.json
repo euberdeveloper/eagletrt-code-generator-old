@@ -1,0 +1,89 @@
+{
+    "$id": "https://eagletrt.it/telemetria-code-generator/structure.schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Structure Model",
+    "description": "v1.0 - 2020/10/08 / The schema for the structure.model.json of the telemetria-code-generator",
+  
+    "definitions": {
+        "simple-value": {
+            "type": "string",
+            "enum": ["int", "double", "long", "char*"]
+        },
+        "complex-value": {
+            "type": "object",
+            "$comment":  "TODO: sistemare pattern; TODO: no equal properties",
+            "patternProperties": { 
+                "^[a-z,A-Z]*$": { "$ref": "#/definitions/simple-value" }
+            },
+            "additionalProperties": false
+        },
+        "id": {
+            "allOf": [
+                { "$ref": "#/definitions/simple-value" },
+                { "const": "int" }
+            ]
+        },
+        "timestamp": {
+            "allOf": [
+                { "$ref": "#/definitions/simple-value" },
+                { "const": "long" }
+            ]
+        },
+        "session-name": {
+            "allOf": [
+                { "$ref": "#/definitions/simple-value" },
+                { "const": "char*" }
+            ]
+        },
+        "message": {
+            "type": "object",
+            "properties": {
+                "timestamp": { "$ref": "#/definitions/timestamp" },
+                "value": {
+                    "oneOf": [
+                        { "$ref": "#/definitions/simple-value" },
+                        { "$ref": "#/definitions/complex-value" }
+                    ]
+                }
+            },
+            "required": ["timestamp", "value"],
+            "additionalProperties": false
+        },
+        "messages-details": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 2,
+            "items": [
+                { "$ref": "#/definitions/message" },
+                { "type": "integer", "exclusiveMinimum": 0 }
+            ]
+        },
+        "recursive-model": {
+            "oneOf": [
+                { "$ref": "#/definitions/simple-value" },
+                { "$ref": "#/definitions/messages-details" },
+                { 
+                    "type": "object",
+                    "$comment":  "TODO: sistemare pattern; TODO: no equal properties",
+                    "patternProperties": { 
+                        "^[a-z,A-Z]*$": { "$ref": "#/definitions/recursive-model" }
+                    },
+                    "additionalProperties": false
+                }
+            ]
+        }
+    },
+
+    "type": "object",
+    "properties": {
+        "id": { "$ref": "#/definitions/id" },
+        "timestamp": { "$ref": "#/definitions/timestamp" },
+        "sessionName": { "$ref": "#/definitions/session-name" }
+    },
+    "$comment":  "TODO: sistemare pattern; TODO: no equal properties",
+    "patternProperties": { 
+        "^[a-z,A-Z]*$": { "$ref": "#/definitions/recursive-model" }
+    },
+    "required": ["id", "timestamp", "sessionName"],
+    "additionalProperties": false
+}

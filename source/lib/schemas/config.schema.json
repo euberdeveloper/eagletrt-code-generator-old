@@ -3,35 +3,37 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "Config Model",
     "description": "v1.0 - 2020/10/08 / The schema for the config.model.json of the telemetria-code-generator",
-    "type": "object",
   
     "definitions": {
-        "primitive-string": { "type": "string" },
-        "primitive-integer": { "type": "integer" },
-        "primitive-double": { 
-            "allOf": [
-                { "not": { "type": "integer" } },
-                { "type": "number" }
-            ]
+        "primitive": {
+            "string": { "type": "string" },
+            "integer": { "type": "integer" },
+            "double": { 
+                "allOf": [
+                    { "not": { "type": "integer" } },
+                    { "type": "number" }
+                ]
+            },
+            "array": {
+                "type": "array",
+                "minItems": 1,
+                "oneOf": [
+                    { "items": { "$ref": "#/definitions/primitive/string" } },
+                    { "items": { "$ref": "#/definitions/primitive/integer" } },
+                    { "items": { "$ref": "#/definitions/primitive/double" } }
+                ]
+            }
         },
-        "primitive-array": {
-            "type": "array",
-            "minItems": 1,
-            "oneOf": [
-                { "items": { "$ref": "#/definitions/primitive-string" } },
-                { "items": { "$ref": "#/definitions/primitive-integer" } },
-                { "items": { "$ref": "#/definitions/primitive-double" } }
-            ]
-        },
+       
         "recursive-model": {
             "oneOf": [
-                { "$ref": "#/definitions/primitive-string" },
-                { "$ref": "#/definitions/primitive-integer" },
-                { "$ref": "#/definitions/primitive-double" },
-                { "$ref": "#/definitions/primitive-array" },
+                { "$ref": "#/definitions/primitive/string" },
+                { "$ref": "#/definitions/primitive/integer" },
+                { "$ref": "#/definitions/primitive/double" },
+                { "$ref": "#/definitions/primitive/array" },
                 { 
                     "type": "object",
-                    "$comment": "TODO: sistemare pattern",
+                    "$comment":  "TODO: sistemare pattern; TODO: no equal properties",
                     "patternProperties": { 
                         "^[a-z,A-Z]*$": { "$ref": "#/definitions/recursive-model" }
                     },
@@ -41,7 +43,8 @@
         }
     },
   
-    "$comment": "TODO: sistemare pattern",
+    "type": "object",
+    "$comment": "TODO: sistemare pattern; TODO: no equal properties",
     "patternProperties": { 
         "^[a-z,A-Z]*$": { "$ref": "#/definitions/recursive-model" }
     },
