@@ -7,9 +7,13 @@
     "eagle": "dist/bin/index.js"
   },
   "scripts": {
-    "transpile": "tsc --project source",
-    "lint": "eslint source/**/*.ts",
-    "lint:fix": "eslint --fix source/**/*.ts",
+    "transpile:source": "tsc --project source",
+    "transpile:test": "tsc --project test",
+    "transpile": "npm run transpile:source && npm run transpile:test",
+    "lint:source": "eslint source/**/*.ts --format codeframe",
+    "lint:fix:source": "eslint --fix source/**/*.ts --format codeframe",
+    "lint": "npm run lint:source",
+    "lint:fix": "npm run lint:fix:source",
     "docs:html": "typedoc --mode library --inputFiles source/lib/index.ts --excludeExternals --excludeNotExported --includeVersion --tsconfig source/tsconfig.json --out docs/documentation/html",
     "docs:html-dev": "typedoc --mode module --name 'eagletrt-code-generator - DEV' --includeVersion --tsconfig source/tsconfig.json --out docs/documentation/html-dev",
     "docs:deploy:html": "vercel docs/documentation/html --name eagletrt-code-generator --confirm --prod --token $VERCEL_TOKEN",

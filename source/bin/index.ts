@@ -10,7 +10,7 @@ yargs
         () => {
             return {};
         },
-        async argv => {
+        argv => {
             const args: any = argv;
             const src: string = args.src;
             const structureModel: string = args.structureModel;
