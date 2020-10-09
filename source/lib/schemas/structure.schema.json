@@ -11,9 +11,8 @@
         },
         "complex-value": {
             "type": "object",
-            "$comment":  "TODO: sistemare pattern; TODO: no equal properties",
             "patternProperties": { 
-                "^[a-z,A-Z,_]*$": { "$ref": "#/definitions/simple-value" }
+                "^(?=^[A-Za-z][A-Za-z0-9_]*$)(?!^.*__.*$).*$": { "$ref": "#/definitions/simple-value" }
             },
             "additionalProperties": false
         },
@@ -64,9 +63,8 @@
                 { "$ref": "#/definitions/messages-details" },
                 { 
                     "type": "object",
-                    "$comment":  "TODO: sistemare pattern; TODO: no equal properties",
                     "patternProperties": { 
-                        "^[a-z,A-Z,_]*$": { "$ref": "#/definitions/recursive-model" }
+                        "^(?=^[A-Za-z][A-Za-z0-9_]*$)(?!^.*__.*$).*$": { "$ref": "#/definitions/recursive-model" }
                     },
                     "additionalProperties": false
                 }
@@ -80,9 +78,8 @@
         "timestamp": { "$ref": "#/definitions/timestamp" },
         "sessionName": { "$ref": "#/definitions/session-name" }
     },
-    "$comment":  "TODO: sistemare pattern; TODO: no equal properties",
     "patternProperties": { 
-        "^[a-z,A-Z,_]*$": { "$ref": "#/definitions/recursive-model" }
+        "^(?=^[A-Za-z][A-Za-z0-9_]*$)(?!^.*__.*$).*$": { "$ref": "#/definitions/recursive-model" }
     },
     "required": ["id", "timestamp", "sessionName"],
     "additionalProperties": false

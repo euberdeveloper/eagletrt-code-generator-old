@@ -33,9 +33,8 @@
                 { "$ref": "#/definitions/primitive/array" },
                 { 
                     "type": "object",
-                    "$comment":  "TODO: sistemare pattern; TODO: no equal properties",
                     "patternProperties": { 
-                        "^[a-z,A-Z,_]*$": { "$ref": "#/definitions/recursive-model" }
+                        "^(?=^[A-Za-z][A-Za-z0-9_]*$)(?!^.*__.*$).*$": { "$ref": "#/definitions/recursive-model" }
                     },
                     "additionalProperties": false
                 }
@@ -44,9 +43,8 @@
     },
   
     "type": "object",
-    "$comment": "TODO: sistemare pattern; TODO: no equal properties",
     "patternProperties": { 
-        "^[a-z,A-Z,_]*$": { "$ref": "#/definitions/recursive-model" }
+        "^(?=^[A-Za-z][A-Za-z0-9_]*$)(?!^.*__.*$).*$": { "$ref": "#/definitions/recursive-model" }
     },
     "additionalProperties": false
 }
