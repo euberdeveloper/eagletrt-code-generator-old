@@ -11,11 +11,11 @@ export interface Options {
      */
     extensions?: string[];
     /**
-     * If the log will be shown on the terminal
+     * If the log will be shown on the terminal. Default: true
      */
     log?: boolean;
     /**
-     * If the generated code will be indented the same as the comment it will substitute
+     * If the generated code will be indented the same as the comment it will substitute. Default: true
      */
     indent?: boolean;
 };

@@ -53,15 +53,15 @@ export class ConfigGenerator extends Generator {
             .replace('.', '->');
     }
 
-    protected getPrimitiveType(data: ConfigPrimitive): 'char*' | 'int' | 'double' {
+    protected getPrimitiveType(data: ConfigPrimitive): 'char*' | 'int' | 'double' | '' {
         if (typeof data === 'string') {
             return 'char*';
-        }
-        else if (typeof data === 'number' && data - Math.floor(data) === 0) {
+        } else if (typeof data === 'number' && data - Math.floor(data) === 0) {
             return "int";
-        }
-        else if (typeof data === 'number' && data - Math.floor(data) !== 0) {
+        } else if (typeof data === 'number' && data - Math.floor(data) !== 0) {
             return "double";
+        } else {
+            return '';
         }
     }
 
@@ -74,6 +74,9 @@ export class ConfigGenerator extends Generator {
         }
         else if (typeof data === 'number' && data - Math.floor(data) !== 0) {
             return "%f";
+        }
+        else {
+            return '';
         }
     }
 

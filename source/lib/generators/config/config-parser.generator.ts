@@ -1,3 +1,4 @@
+
 import { ConfigModel, ConfigPrimitive, ConfigPrimitiveArray, StructureModel } from '../../types';
 import { ConfigGenerator } from './configGenerator';
 
@@ -87,7 +88,7 @@ class ConfigParserGenerator extends ConfigGenerator {
         this.print('char* key = extractString(json_tokens[*i], json_string);');
 
         Object.keys(data).forEach((key, index) => {
-            let ifContent = [];
+            let ifContent: string[] = [];
             if (Array.isArray(data[key])) {
                 this.keys.push(key);
                 this.printConfigSwitchArray(data[key] as ConfigPrimitiveArray, ifContent);
@@ -114,7 +115,7 @@ class ConfigParserGenerator extends ConfigGenerator {
             `{`,
             `\tcase JSMN_ARRAY:`,
             `\t\t*i += token.size;`,
-            `\t\tbreak;`, ,
+            `\t\tbreak;`,
             `\tcase JSMN_OBJECT:`,
             `\t\t*i += 2 * token.size;`,
             `\t\tbreak;`,
