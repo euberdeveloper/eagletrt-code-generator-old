@@ -34,7 +34,7 @@
                 { 
                     "type": "object",
                     "patternProperties": { 
-                        "^(?=^[A-Za-z][A-Za-z0-9_]*$)(?!^.*__.*$).*$": { "$ref": "#/definitions/recursive-model" }
+                        "^(?=^[A-Za-z]\\w*$)(?=^\\w*[A-Za-z0-9]$)(?!^.*__.*$).*$": { "$ref": "#/definitions/recursive-model" }
                     },
                     "additionalProperties": false
                 }
@@ -44,7 +44,7 @@
   
     "type": "object",
     "patternProperties": { 
-        "^(?=^[A-Za-z][A-Za-z0-9_]*$)(?!^.*__.*$).*$": { "$ref": "#/definitions/recursive-model" }
+        "^(?=^[A-Za-z]\\w*$)(?=^\\w*[A-Za-z0-9]$)(?!^.*__.*$).*$": { "$ref": "#/definitions/recursive-model" }
     },
     "additionalProperties": false
 }

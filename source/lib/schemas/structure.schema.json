@@ -12,7 +12,7 @@
         "complex-value": {
             "type": "object",
             "patternProperties": { 
-                "^(?=^[A-Za-z][A-Za-z0-9_]*$)(?!^.*__.*$).*$": { "$ref": "#/definitions/simple-value" }
+                "^(?=^[A-Za-z]\\w*$)(?=^\\w*[A-Za-z0-9]$)(?!^.*__.*$).*$": { "$ref": "#/definitions/simple-value" }
             },
             "additionalProperties": false
         },
@@ -64,7 +64,7 @@
                 { 
                     "type": "object",
                     "patternProperties": { 
-                        "^(?=^[A-Za-z][A-Za-z0-9_]*$)(?!^.*__.*$).*$": { "$ref": "#/definitions/recursive-model" }
+                        "^(?=^[A-Za-z]\\w*$)(?=^\\w*[A-Za-z0-9]$)(?!^.*__.*$).*$": { "$ref": "#/definitions/recursive-model" }
                     },
                     "additionalProperties": false
                 }
@@ -79,7 +79,7 @@
         "sessionName": { "$ref": "#/definitions/session-name" }
     },
     "patternProperties": { 
-        "^(?=^[A-Za-z][A-Za-z0-9_]*$)(?!^.*__.*$).*$": { "$ref": "#/definitions/recursive-model" }
+        "^(?=^[A-Za-z]\\w*$)(?=^\\w*[A-Za-z0-9]$)(?!^.*__.*$).*$": { "$ref": "#/definitions/recursive-model" }
     },
     "required": ["id", "timestamp", "sessionName"],
     "additionalProperties": false
