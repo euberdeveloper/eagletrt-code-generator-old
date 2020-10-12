@@ -6,7 +6,7 @@ export class Logger {
     private log: boolean;
 
     constructor(options: Options) {
-        this.log = options.log;
+        this.log = options.log ?? true;
     }
 
     private formatPath(path: string): string {

@@ -18,6 +18,11 @@ export class StructureGenerator extends Generator {
         const last = this.keys.length - 1;
         return `${this.keys[last]}_count`;
     }
+
+    protected get sizeName(): string {
+        const last = this.keys.length - 1;
+        return `${this.keys[last]}_size`;
+    }
     
     protected get propCountName(): string {
         const last = this.keys.length - 1;

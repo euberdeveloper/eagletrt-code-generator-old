@@ -1,54 +1,66 @@
-import { ConfigModel, EConfigType, StructureModel } from '../../types';
+import { ConfigModel, ConfigPrimitive, ConfigPrimitiveArray, StructureModel } from '../../types';
 import { ConfigGenerator } from './configGenerator';
 
 class ConfigTypeGenerator extends ConfigGenerator {
 
+    private indentation = 0;
     private structs: string[] = [];
+    private cursor = -1;
 
-    private parse(data: any, name: string): void {
-        let conf = `typedef struct {\n`;
+    protected print(str: string): void {
+        this.structs[this.cursor] += `${this.indentationTabs}${str}\n`;
+    }
 
-        for (const k in data) {
-            let type = "";
+    private get indentationTabs(): string {
+        return Array(this.indentation)
+            .fill('\t')
+            .join('');
+    }
 
-            switch (this.getConfigType(data[k])) {
-                case EConfigType.ConfigArray:
-                    if ((data[k] as Array<any>).length) {
-                        type = this.getPrimitiveType(data[k][0]) + "*";
-                        if (type != "")
-                            conf += `\tint ${k}_count;\n`;
-                    }
-                    break;
+    private addStruct(): void {
+        this.structs.splice(this.cursor + 1, 0, '');
+    }
+    
+    private parsePrimitive(data: ConfigPrimitive, key: string): void {
+        this.print(`${this.getPrimitiveType(data)} ${key};`);
+    }
 
-                case EConfigType.ConfigObject:
-                    type = `${k}_${name}`;
-                    this.parse(data[k], type);
-                    break;
+    private parsePrimitiveArray(data: ConfigPrimitiveArray, key: string): void {
+        const type = this.getPrimitiveType(data[0]);
+        this.print(`${type}* ${key};`);
+        this.print(`int ${key}_count;`);
+    }
 
-                case EConfigType.ConfigString:
-                case EConfigType.ConfigInt:
-                case EConfigType.ConfigDouble:
-                    type = this.getPrimitiveType(data[k]);
-                    break;
-
-
-                case EConfigType.Unknown:
-                default:
-                    break;
+    private parse(data: ConfigModel, name: string): void {
+        this.addStruct();
+        this.keys.push(name);
+        this.cursor++;
+        this.indentation = 0;
+        this.print(`typedef struct {`);
+        this.indentation = 1;
+        for (const key in data) {
+            if (Array.isArray(data[key])) {
+                this.parsePrimitiveArray(data[key] as ConfigPrimitiveArray, key);
             }
-
-            if (type != "")
-                conf += `\t${type} ${k};\n`
+            else if (typeof data[key] === 'object') {
+                this.parse(data[key] as ConfigModel, key);
+                this.print(`${this.structName} ${key};`);
+                this.keys.pop();
+            }
+            else {
+                this.parsePrimitive(data[key] as ConfigPrimitive, key);
+            }
         }
-
-        conf += `} ${name};\n`
-        this.structs.push(conf);
+        this.indentation = 0;
+        this.print(`} ${this.structName};`);
+        this.indentation = 1;
+        this.cursor--;
     }
 
     protected comment = '{{GENERATE_CONFIG_TYPE}}';
     protected generate(): void {
         this.parse(this.config, 'config_t');
-        this.code = this.structs.join('\n');
+        this.code = this.structs.reverse().join('\n');
     }
 
     constructor(structure: StructureModel, config: ConfigModel) {

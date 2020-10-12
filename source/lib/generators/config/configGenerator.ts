@@ -1,58 +1,84 @@
-import { ConfigModel, ConfigPrimitive, EConfigType, Generator, StructureModel } from '../../types';
+import { ConfigModel, ConfigPrimitive, Generator, StructureModel } from '../../types';
 
 export class ConfigGenerator extends Generator {
 
-    protected getPrimitiveType(data: ConfigPrimitive): string {
+    protected keys: (string | number)[] = [];
+
+    protected get structName(): string {
+        return this.keys.length > 1 ? `${this.keys.slice(1).join('_')}_config_t` : 'config_t';
+    }
+
+    protected get functionName(): string {
+        function handleKey(key: string): string  {
+            for (let i = key.indexOf('_'); i !== -1; i = key.indexOf('_')) {
+                key = i !== key.length - 1
+                    ? key.slice(0, i) + key.charAt(i + 1).toUpperCase() + key.slice(i + 2, key.length)
+                    : key;
+            }
+
+            return `${key.charAt(0).toUpperCase()}${key.slice(1)}`;
+        }
+
+        return this.keys.length > 1
+            ? this.keys
+                .slice(1)
+                .filter(key => typeof key === 'string')
+                .reduce<string>((acc, curr, index) => acc + handleKey(curr as string), 'parse') + 'Object'
+            : 'parseJsonTokens';
+    }
+
+    protected get propName(): string {
+        function handleKey(key: string | number): string  {
+            return typeof key === 'string' ? `.${key}` : `[${key}]`;
+        }
+
+        return this.keys
+            .slice(1)
+            .reduce<string>((accumulator, current) => accumulator + handleKey(current), this.keys[0] as string)
+            .replace('.', '->');
+    }
+
+    protected get countName(): string {
+        const last = this.keys.length - 1;
+        return `${this.keys[last]}_count`;
+    }
+    
+    protected get propCountName(): string {
+        function handleKey(key: string | number): string  {
+            return typeof key === 'string' ? `.${key}` : `[${key}]`;
+        }
+
+        const last = this.keys.length - 1;
+        return `${this.keys.slice(1, last).reduce<string>((accumulator, current) => accumulator += handleKey(current), this.keys[0] as string)}.${this.countName}`
+            .replace('.', '->');
+    }
+
+    protected getPrimitiveType(data: ConfigPrimitive): 'char*' | 'int' | 'double' | '' {
         if (typeof data === 'string') {
-            return `char*`;
+            return 'char*';
+        } else if (typeof data === 'number' && data - Math.floor(data) === 0) {
+            return "int";
+        } else if (typeof data === 'number' && data - Math.floor(data) !== 0) {
+            return "double";
+        } else {
+            return '';
         }
-        else if (this.isInt(data)) {
-            return `int`;
+    }
+
+    protected getPrimitivePrintfFormatter(data: ConfigPrimitive): string {
+        if (typeof data === 'string') {
+            return '%s';
         }
-        else if (this.isDouble(data)) {
-            return `double`;
+        else if (typeof data === 'number' && data - Math.floor(data) === 0) {
+            return "%d";
+        }
+        else if (typeof data === 'number' && data - Math.floor(data) !== 0) {
+            return "%f";
         }
         else {
             return '';
         }
     }
-
-    protected getConfigType(data: any): EConfigType {
-        if (Array.isArray(data)) {
-            return EConfigType.ConfigArray;
-        } else if (this.isString(data)) {
-            return EConfigType.ConfigString;
-        } else if (this.isInt(data)) {
-            return EConfigType.ConfigInt;
-        } else if (this.isDouble(data)) {
-            return EConfigType.ConfigDouble;
-        } else if (this.isObject(data)) {
-            return EConfigType.ConfigObject;
-        } else {
-            return EConfigType.Unknown;
-        }
-    }
-    
-    protected getArrayPrimitiveType(arr: Array<any>): EConfigType {
-        return arr.length === 0 ? EConfigType.Unknown : this.getConfigType(arr[0]);
-    }
-
-    protected isInt(data: any): boolean {
-        return (typeof data === 'number' && data - Math.floor(data) === 0);
-    }
-
-    protected isDouble(data: any): boolean {
-        return (typeof data === 'number' && data - Math.floor(data) !== 0);
-    }
-
-    protected isString(data: any): boolean {
-        return (typeof data === 'string');
-    }
-
-    protected isObject(data: any): boolean {
-        return (typeof data === 'object');
-    }
-
 
     constructor(structure: StructureModel, config: ConfigModel) {
         super(structure, config);

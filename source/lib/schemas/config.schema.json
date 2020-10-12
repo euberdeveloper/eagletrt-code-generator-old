@@ -1,0 +1,50 @@
+{
+    "$id": "https://eagletrt.it/telemetria-code-generator/config.schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Config Model",
+    "description": "v1.0 - 2020/10/08 / The schema for the config.model.json of the telemetria-code-generator",
+  
+    "definitions": {
+        "primitive": {
+            "string": { "type": "string" },
+            "integer": { "type": "integer" },
+            "double": { 
+                "allOf": [
+                    { "not": { "type": "integer" } },
+                    { "type": "number" }
+                ]
+            },
+            "array": {
+                "type": "array",
+                "minItems": 1,
+                "oneOf": [
+                    { "items": { "$ref": "#/definitions/primitive/string" } },
+                    { "items": { "$ref": "#/definitions/primitive/integer" } },
+                    { "items": { "$ref": "#/definitions/primitive/double" } }
+                ]
+            }
+        },
+       
+        "recursive-model": {
+            "oneOf": [
+                { "$ref": "#/definitions/primitive/string" },
+                { "$ref": "#/definitions/primitive/integer" },
+                { "$ref": "#/definitions/primitive/double" },
+                { "$ref": "#/definitions/primitive/array" },
+                { 
+                    "type": "object",
+                    "patternProperties": { 
+                        "^(?=^[A-Za-z]\\w*$)(?=^\\w*[A-Za-z0-9]$)(?!^.*__.*$).*$": { "$ref": "#/definitions/recursive-model" }
+                    },
+                    "additionalProperties": false
+                }
+            ]
+        }
+    },
+  
+    "type": "object",
+    "patternProperties": { 
+        "^(?=^[A-Za-z]\\w*$)(?=^\\w*[A-Za-z0-9]$)(?!^.*__.*$).*$": { "$ref": "#/definitions/recursive-model" }
+    },
+    "additionalProperties": false
+}

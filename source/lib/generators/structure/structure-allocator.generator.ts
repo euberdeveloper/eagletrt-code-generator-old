@@ -10,7 +10,8 @@ class StructureAllocatorGenerator extends StructureGenerator {
                 const keys = this.propName;
                 const keysCount = this.propCountName;
                 const type = this.structName;
-                this.print(`data${keys} = (${type}*) malloc(sizeof(${type}) * ${data[key][1]});`);
+                this.print(`data${keys}_size = ${data[key][1]};`);
+                this.print(`data${keys} = (${type}*) malloc(sizeof(${type}) * data${keys}_size);`);
                 this.print(`data${keysCount} = 0;`);
                 this.parse(data[key][0]);
                 this.keys.pop();

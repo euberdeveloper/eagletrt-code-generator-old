@@ -1,15 +1,21 @@
 {
   "name": "eagletrt-code-generator",
-  "version": "1.0.18",
+  "version": "2.3.1",
   "description": "Generate dinamically code for the eagletrt telemetry",
   "main": "dist/lib/index.js",
   "bin": {
     "eagle": "dist/bin/index.js"
   },
   "scripts": {
-    "transpile": "tsc --project source",
-    "lint": "eslint source/**/*.ts",
-    "lint:fix": "eslint --fix source/**/*.ts",
+    "transpile:source": "tsc --project source",
+    "transpile:test": "tsc --project test",
+    "transpile": "npm run transpile:source",
+    "lint:source": "eslint source/**/*.ts --format codeframe",
+    "lint:fix:source": "eslint --fix source/**/*.ts --format codeframe",
+    "lint:test": "eslint test/**/*.ts --format codeframe",
+    "lint:fix:test": "eslint --fix test/**/*.ts --format codeframe",
+    "lint": "npm run lint:source",
+    "lint:fix": "npm run lint:fix:source",
     "docs:html": "typedoc --mode library --inputFiles source/lib/index.ts --excludeExternals --excludeNotExported --includeVersion --tsconfig source/tsconfig.json --out docs/documentation/html",
     "docs:html-dev": "typedoc --mode module --name 'eagletrt-code-generator - DEV' --includeVersion --tsconfig source/tsconfig.json --out docs/documentation/html-dev",
     "docs:deploy:html": "vercel docs/documentation/html --name eagletrt-code-generator --confirm --prod --token $VERCEL_TOKEN",
@@ -36,10 +42,9 @@
   ],
   "homepage": "https://eagletrt-code-generator.euberdeveloper.now.sh",
   "devDependencies": {
+    "@euberdeveloper/eslint-config-typescript": "^1.0.0",
     "@types/node": "^14.11.2",
     "@types/yargs": "^15.0.7",
-    "@typescript-eslint/eslint-plugin": "^4.2.0",
-    "@typescript-eslint/parser": "^4.2.0",
     "commitizen": "^4.2.1",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.10.0",
@@ -48,6 +53,7 @@
     "vercel": "^20.1.1"
   },
   "dependencies": {
+    "ajv": "^6.12.5",
     "chalk": "^4.1.0",
     "dree": "^2.4.16",
     "yargs": "^16.0.3"

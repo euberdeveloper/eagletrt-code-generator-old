@@ -7,7 +7,7 @@ const DEFAULT_OPTIONS: Options = {
     indent: true
 };
 
-export function mergeOptions(options: Options): Options {
+export function mergeOptions(options?: Options): Options {
     const merged: Options = {};
     options = options || {};
 

@@ -1,1 +1,0 @@
-// {{GENERATE_CONFIG_TYPE}}
