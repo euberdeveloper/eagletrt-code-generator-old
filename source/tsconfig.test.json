@@ -10,5 +10,5 @@
         "sourceMap": true,
         "declaration": true
     },
-    "exclude": ["test"]
+    "assets": ["test/test-assets/**/*"]
 }

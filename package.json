@@ -7,17 +7,22 @@
     "eagle": "dist/bin/index.js"
   },
   "scripts": {
-    "serve:test": "npm run transpile && npm run test",
-    "test": "mocha ./dist/test/**/*.js",
-    "transpile:source": "tsc --project source",
-    "transpile:test": "tsc --project test",
+    "serve:test": "npm run transpile:test && npm run start:test",
+    "start:test": "mocha ./dist/test/**/*.js",
+    "transpile:test": "tsc --project source/tsconfig.test.json",
+    
+    "start:reference": "node ./dist/test/generateReferenceFiles",
+
+    "transpile:source": "tsc --project source/tsconfig.json",
     "transpile": "npm run transpile:source",
+
     "lint:source": "eslint source/**/*.ts --format codeframe",
     "lint:fix:source": "eslint --fix source/**/*.ts --format codeframe",
     "lint:test": "eslint test/**/*.ts --format codeframe",
     "lint:fix:test": "eslint --fix test/**/*.ts --format codeframe",
     "lint": "npm run lint:source",
     "lint:fix": "npm run lint:fix:source",
+
     "docs:html": "typedoc --mode library --inputFiles source/lib/index.ts --excludeExternals --excludeNotExported --includeVersion --tsconfig source/tsconfig.json --out docs/documentation/html",
     "docs:html-dev": "typedoc --mode module --name 'eagletrt-code-generator - DEV' --includeVersion --tsconfig source/tsconfig.json --out docs/documentation/html-dev",
     "docs:deploy:html": "vercel docs/documentation/html --name eagletrt-code-generator --confirm --prod --token $VERCEL_TOKEN",
@@ -25,6 +30,7 @@
     "docs:deploy": "npm run docs:deploy:html && npm run docs:deploy:html-dev",
     "docs:tree": "dree parse . --dest docs/directory-tree --name tree --options docs/directory-tree/dree.json",
     "docs": "npm run docs:html && npm run docs:html-dev && npm run docs:deploy",
+
     "commit": "git-cz"
   },
   "repository": {

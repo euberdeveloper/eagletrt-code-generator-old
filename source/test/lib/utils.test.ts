@@ -2,13 +2,38 @@
 import { assert } from 'chai';
 import { Code } from '../../lib/types';
 import rewire = require('rewire');
+import * as fs from 'fs';
 
+import * as Dree from 'dree';
 import { mergeOptions } from '../../lib/utils/options';
 import { parseTemplate } from './../../lib/utils/parseTemplate';
-import { compareObjects } from '../testUtils';
+import { compareObjects, getTemplateFilesPath, testConfig } from '../testUtils';
+import { checkModelsSchema } from '../../lib/utils/checkModelsSchema';
 
 
 describe('Utils', function () {
+
+    let paths: { templateFilePaths: string[]; toTestPaths: string[]} = { templateFilePaths: [], toTestPaths: [] };
+    before(function () {
+        paths = getTemplateFilesPath();
+    });
+
+    const originalLogFunction = console.log;
+    let output = '';
+    beforeEach(() => {
+        output = '';
+        console.log = (msg: string) => {
+            output += msg + '\n';
+        };
+    });
+
+    afterEach(function () {
+        console.log = originalLogFunction;
+        // eslint-disable-next-line @typescript-eslint/no-invalid-this
+        if (this.currentTest?.state === 'failed') {
+            console.log(output);
+        }
+    });
 
     describe('parseTemplate', () => {
 
@@ -74,5 +99,37 @@ describe('Utils', function () {
 
     });
 
+
+    describe('checkModelsSchema', () => {
+
+        describe('#checkModelsSchema(structureModel: string, configModel: string): { structureModelObject: StructureModel, configModelObject: ConfigModel }', function () {
+
+            it('should validate correct model schemas', function () {
+                for (let path of paths.toTestPaths) {
+                    try {
+                        checkModelsSchema(path + '/structure.model.json', path + '/config.model.json');
+                    } catch (error) {
+                        assert(false, `Model ${path} not validated`)                        
+                    }
+                }
+            });
+
+            it('should not validate incorrect model schemas', function () {
+
+                let incorrectJsonDirs: string[] = [];
+                Dree.scan(`${testConfig.assetsPath}/invalid-json`, { depth: 1 }, () => { }, (dir) => {
+                    incorrectJsonDirs.push(dir.path);
+                });
+                for (let path of incorrectJsonDirs) {
+                    try {
+                        checkModelsSchema(path + '/structure.model.json', path + '/config.model.json');
+                        assert(false, `Invalid model ${path} validated`);
+                    } catch (error) {
+                    }
+                }
+            });
+        });
+
+    });
 
 });
