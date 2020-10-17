@@ -1,8 +1,8 @@
 import { assert } from 'chai';
 import * as fs from 'fs';
-import { getCorrectFileNameFromTemplate, getFileNameFromTemplate, generateEverything, getTemplateFilesPath, ReferenceCode, removeCodeFormatting } from '../testUtils';
-import getGenerators from '../../lib/generators';
-import { Logger } from '../../lib/utils/logger';
+import { getCorrectFileNameFromTemplate, getFileNameFromTemplate, generateEverything, getTemplateFilesPath, ReferenceCode, removeCodeFormatting, testConfig } from '../testUtils';
+import getGenerators from '../../source/lib/generators';
+import { Logger } from '../../source/lib/utils/logger';
 
 
 describe('Generator', function () {
@@ -40,7 +40,7 @@ describe('Generator', function () {
 
         let referenceCode: ReferenceCode = { almostempty: {}, tests: {} };
         before(function () {
-            referenceCode = JSON.parse(fs.readFileSync('./test-assets/codereference.json', 'utf-8'));
+            referenceCode = JSON.parse(fs.readFileSync(`${testConfig.assetsPath}/codereference.json`, 'utf-8'));
         });
 
         it(`should get generators`, () => {

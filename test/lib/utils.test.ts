@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 import { assert } from 'chai';
-import { Code } from '../../lib/types';
+import { Code } from '../../source/lib/types';
 import rewire = require('rewire');
 import * as fs from 'fs';
 
 import * as Dree from 'dree';
-import { mergeOptions } from '../../lib/utils/options';
-import { parseTemplate } from './../../lib/utils/parseTemplate';
+import { mergeOptions } from '../../source/lib/utils/options';
+import { parseTemplate } from './../../source/lib/utils/parseTemplate';
 import { compareObjects, getTemplateFilesPath, testConfig } from '../testUtils';
-import { checkModelsSchema } from '../../lib/utils/checkModelsSchema';
+import { checkModelsSchema } from '../../source/lib/utils/checkModelsSchema';
 
 
 describe('Utils', function () {
@@ -80,7 +80,7 @@ describe('Utils', function () {
     describe('options', () => {
 
         describe('#mergeOptions(options: Options): Options', function () {
-            const DEFAULT_OPTIONS = rewire('../../lib/utils/options').__get__('DEFAULT_OPTIONS');
+            const DEFAULT_OPTIONS = rewire('../../source/lib/utils/options').__get__('DEFAULT_OPTIONS');
 
             it('should get default option', function () {
                 assert(compareObjects(DEFAULT_OPTIONS, mergeOptions({})), 'Object different');

@@ -2,18 +2,19 @@
   "name": "eagletrt-code-generator",
   "version": "2.3.1",
   "description": "Generate dinamically code for the eagletrt telemetry",
-  "main": "dist/lib/index.js",
+  "main": "dist/source/lib/index.js",
   "bin": {
-    "eagle": "dist/bin/index.js"
+    "eagle": "dist/source/bin/index.js"
   },
   "scripts": {
-    "serve:test": "npm run transpile:test && npm run start:test",
-    "start:test": "mocha ./dist/test/**/*.js",
-    "transpile:test": "tsc --project source/tsconfig.test.json",
-    
-    "start:reference": "node ./dist/test/generateReferenceFiles",
+    "nyc": "nyc --extension=ts --reporter=html --reporter=text --reporter=lcov -x \"source/test\" npm run test",
 
-    "transpile:source": "tsc --project source/tsconfig.json",
+    "serve:test": "npm run transpile:test && npm run test",
+    "test": "mocha ./dist/test/test/**/*.test.js --reporter spec",
+    "start:reference": "node ./dist/test/test/generateReferenceFiles",
+    
+    "transpile:test": "tsc --project test",
+    "transpile:source": "tsc --project source",
     "transpile": "npm run transpile:source",
 
     "lint:source": "eslint source/**/*.ts --format codeframe",
@@ -30,7 +31,7 @@
     "docs:deploy": "npm run docs:deploy:html && npm run docs:deploy:html-dev",
     "docs:tree": "dree parse . --dest docs/directory-tree --name tree --options docs/directory-tree/dree.json",
     "docs": "npm run docs:html && npm run docs:html-dev && npm run docs:deploy",
-
+    
     "commit": "git-cz"
   },
   "repository": {
@@ -64,7 +65,8 @@
     "rewire": "^5.0.0",
     "typedoc": "^0.17.0-3",
     "typescript": "^4.0.3",
-    "vercel": "^20.1.1"
+    "vercel": "^20.1.1",
+    "nyc": "^15.1.0" 
   },
   "dependencies": {
     "ajv": "^6.12.5",

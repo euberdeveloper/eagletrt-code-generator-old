@@ -1,7 +1,7 @@
 import * as fs from 'fs';
-import { generateEverything, getTemplateFilesPath, getCorrectFileNameFromTemplate, getFileNameFromTemplate, ReferenceCode } from './testUtils';
-import getGenerators from '../lib/generators';
-import { Logger } from '../lib/utils/logger';
+import { generateEverything, getTemplateFilesPath, getCorrectFileNameFromTemplate, getFileNameFromTemplate, ReferenceCode, testConfig } from './testUtils';
+import getGenerators from '../source/lib/generators';
+import { Logger } from '../source/lib/utils/logger';
 
 let paths = getTemplateFilesPath();
 generateEverything(paths.toTestPaths);
@@ -28,4 +28,5 @@ for (const toTestPath of paths.toTestPaths) {
     }
     referenceCode.tests[toTestPath] = toAdd;
 }
-fs.writeFileSync('./test-assets/codereference.json', JSON.stringify(referenceCode));
+
+fs.writeFileSync(`${testConfig.assetsPath}/codereference.json`, JSON.stringify(referenceCode));

@@ -1,8 +1,8 @@
 import * as Dree from 'dree';
-import { generate } from '../lib/index';
+import { generate } from '../source/lib/index';
 
 export const testConfig = {
-    assetsPath: './test-assets'
+    assetsPath: './test/test-assets'
 };
 
 export function getDirToTest (folder: string): string[] {
