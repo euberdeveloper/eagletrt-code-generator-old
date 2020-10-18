@@ -374,6 +374,18 @@ npm run transpile:test
 npm test
 ```
 
+## Changelog
+
+### Version 2
+
+* The generators for the code that parses the config.json have been added.
+* Json schemas for the validation of the json models given as inputs have been added.
+* Tests have been added
+
+## Version 1
+
+The first version, that started by a javascript script in the main telemetry repository and have become this typescript package.
+
 ## Project structure
 
 Made with [dree](https://github.com/euberdeveloper/dree)
