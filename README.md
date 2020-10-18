@@ -298,7 +298,7 @@ The generators are the **typescript classes** that replace a certain **special c
 
 | Comment | Description | template example | compiled example |
 | --- | --- | --- | --- |
-| {{GENERATE_CONFIG_TYPE}} | Generates the c struct representing the config | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/config_service/config_type.template.h) | [link](https://githubhom/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/config_service/config_type.h) |
+| {{GENERATE_CONFIG_TYPE}} | Generates the c struct representing the config | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/config_service/config_type.template.h) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/config_service/config_type.h) |
 
 ### config-allocator.generator
 
