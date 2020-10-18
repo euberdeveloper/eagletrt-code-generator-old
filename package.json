@@ -9,7 +9,7 @@
   "scripts": {
     "transpile:test": "tsc --project test",
     "transpile:source": "tsc --project source",
-    "transpile": "npm run transpile:source && npm run transpile:tests",
+    "transpile": "npm run transpile:source && npm run transpile:test",
     "lint:source": "eslint source/**/*.ts --format codeframe",
     "lint:fix:source": "eslint --fix source/**/*.ts --format codeframe",
     "lint:test": "eslint test/**/*.ts --format codeframe",
