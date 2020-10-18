@@ -6,6 +6,13 @@ import { parseTemplate } from './parseTemplate';
 import { Logger } from './logger';
 
 
+/**
+ * Properly transpiles the source folder, generating a file for each template file and substituting the template comment with the generated piece of code.
+ * @param src The path of the directory to transpile.
+ * @param codes The array of Code objects containing template comment and associated generated code.
+ * @param options The options passed to the "generate" function.
+ * @param logger The Logger instance.
+ */
 export function transpile(src: string, codes: Code[], options: Options, logger: Logger): void { 
     // Get scan options
     const scanOptions: ScanOptions = {

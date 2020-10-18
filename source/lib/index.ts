@@ -18,7 +18,7 @@ export { Options } from './types';
  * @param configModel The path to the json file containing the config model, used by generators to dynamically generate code about the config parser. The default is config.model.json.
  * @param options The options specifying things such as logging, indentation and filters on the files
  */
-export function generate (src?: string, structureModel?: string, configModel?: string, options?: Options): void {
+export function generate(src?: string, structureModel?: string, configModel?: string, options?: Options): void {
     src = src ?? process.cwd();
     structureModel = structureModel ?? path.join(process.cwd(), 'structure.model.json');
     configModel = configModel ?? path.join(process.cwd(), 'config.model.json');

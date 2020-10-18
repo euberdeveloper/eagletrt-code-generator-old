@@ -5,6 +5,12 @@ import * as structureSchema from '../schemas/structure.schema.json';
 import * as configSchema from '../schemas/config.schema.json';
 import { ConfigModel, StructureModel } from '../types';
 
+/**
+ * Parses the structure.model.json and config.model.json given their paths. Checks them against their json-schema and throws an error if they does not match.
+ * @param structureModel The path of the json structure model.
+ * @param configModel The path of the json config model.
+ * @return An object containing the structure and config models.
+ */
 export function checkModelsSchema(structureModel: string, configModel: string): { structureModelObject: StructureModel, configModelObject: ConfigModel } {
     const ajv = new Ajv();
 
