@@ -1,33 +1,57 @@
 eagletrt-code-generator
  ├── LICENSE
  ├── README.md
- ├── package-lock.json
- ├── package.json
  ├─> dist
+ │   ├─> source
+ │   │   ├─> bin
+ │   │   └─> lib
+ │   └─> test
  ├─> docs
  │   ├─> directory-tree
  │   ├─> example
  │   └─> videos
- └─> source
-     ├─> bin
-     │   └── index.ts
-     ├─> lib
-     │   ├─> generators
-     │   │   ├─> bson
-     │   │   │   └── bson.generator.ts
-     │   │   ├── index.ts
-     │   │   └─> structure
-     │   │       ├── structure-allocator.generator.ts
-     │   │       ├── structure-deallocator.generator.ts
-     │   │       ├── structure-type.generator.ts
-     │   │       └── structureGenerator.ts
-     │   ├── index.ts
-     │   ├─> types
-     │   │   └── index.ts
-     │   └─> utils
-     │       ├── getCodes.ts
-     │       ├── logger.ts
-     │       ├── options.ts
-     │       ├── parseTemplate.ts
-     │       └── transpile.ts
-     └── tsconfig.json
+ ├── package-lock.json
+ ├── package.json
+ ├─> source
+ │   ├─> bin
+ │   │   └── index.ts
+ │   ├─> lib
+ │   │   ├─> generators
+ │   │   │   ├─> bson
+ │   │   │   │   └── bson.generator.ts
+ │   │   │   ├─> config
+ │   │   │   │   ├── config-allocator.generator.ts
+ │   │   │   │   ├── config-deallocator.generator.ts
+ │   │   │   │   ├── config-parser.generator.ts
+ │   │   │   │   ├── config-print.generator.ts
+ │   │   │   │   ├── config-type.generator.ts
+ │   │   │   │   └── configGenerator.ts
+ │   │   │   ├── index.ts
+ │   │   │   └─> structure
+ │   │   │       ├── structure-allocator.generator.ts
+ │   │   │       ├── structure-deallocator.generator.ts
+ │   │   │       ├── structure-type.generator.ts
+ │   │   │       └── structureGenerator.ts
+ │   │   ├── index.ts
+ │   │   ├─> schemas
+ │   │   │   ├── config.schema.json
+ │   │   │   └── structure.schema.json
+ │   │   ├─> types
+ │   │   │   ├─> config
+ │   │   │   │   └── index.ts
+ │   │   │   ├─> generator
+ │   │   │   │   └── index.ts
+ │   │   │   ├── index.ts
+ │   │   │   ├─> options
+ │   │   │   │   └── index.ts
+ │   │   │   └─> structure
+ │   │   │       └── index.ts
+ │   │   └─> utils
+ │   │       ├── checkModelsSchema.ts
+ │   │       ├── getCodes.ts
+ │   │       ├── logger.ts
+ │   │       ├── options.ts
+ │   │       ├── parseTemplate.ts
+ │   │       └── transpile.ts
+ │   └── tsconfig.json
+ └─> test

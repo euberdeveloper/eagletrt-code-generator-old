@@ -9,15 +9,15 @@ Generate dinamically code for the [@eagletrt](https://www.github.com/eagletrt) t
 
 ## Project purpose
 
-This project is an **npm** package made for the **telemetry** of eagletrt. The telemetry consists in a **c program** located in a **Raspberry Pi** and attached to the canbus of the car and to a rover-gps. Its job is reading all the sensors **messages**, forwarding them via mqtt and saving them in a local mongodb database. In particular, all messages are **accumulated** in a **structure** for some hundreds of milliseconds, the structure is parsed to **bson** and then it is sent via mqtt and saved in the database. After that the process starts again. The problem is that c is a **statically typed** programming language while the structure of the saved data **changes very frequently** and is quite **articulated**. Changing the c struct and the bson parser every time that the structure was modified was a **hell**. Hence this project was made. I started thinking that there exist some **dynamically typed** languages, such as **typescript**. The structure of the saved data is now represented in a **json** file and there is this **nodejs** module that reads that json file and **generates the c code that depends on it**. So now **we just need to change that json file and execute this module, saving hours of time**.
+This project is an **npm** package made for the **telemetry** of eagletrt. The telemetry consists in a **c program** located in a **Raspberry Pi** and attached to the canbus of the car and to a rover-gps. Its job is reading all the sensors **messages**, forwarding them via mqtt and saving them in a local mongodb database. In particular, all messages are **accumulated** in a **structure** for some hundreds of milliseconds, the structure is parsed to **bson** and then it is sent via mqtt and saved in the database. After that the process starts again. The problem is that c is a **statically typed** programming language while the structure of the saved data **changes very frequently** and is quite **articulated**. Changing the c struct and the bson parser every time that the structure was modified was a **hell**. Hence this project was made. I started thinking that there exist some **dynamically typed** languages, such as **typescript**. The structure of the saved data is now represented in a **json** file and there is this **nodejs** module that reads that json file and **generates the c code that depends on it**. So now **we just need to change that json file and execute this module, saving hours of time**. In the second version, this method has been applied to the **config parser** as well.
 
 ## How it was made
 
-This project was made with **typescript** and consists in an npm module that can be used also **globally**, as a terminal command. It is linted with **eslint** and every time there is a push on github, it is checked by **travis.ci**.
+This project was made with **typescript** and consists in an npm module that can be used also **globally**, as a terminal command. It is linted with **eslint**, tested with **mocha** and every time there is a push on github, it is checked by **travis.ci**.
 
 ## How does it work
 
-The library gets as inputs a **src** folder and a **structure.json** file. Then it reads the json file, whose structure will **determine the generated code**, fetch all the files in the src folder whose extension is preceded by **.template** (example: `main.template.c`), search for some **special comments** in the code (such as `// {{GENERATE_BSON}}`) and **create** a file without the .template extension with the right **generated code instead of the comment**.
+The library gets as inputs a **src** folder, a **structure.model.json** file and a **config.model.json** file. Then it reads the json files, whose content will **determine the generated code**, fetch all the files in the src folder whose extension is preceded by **.template** (example: `main.template.c`), search for some **special comments** in the code (such as `// {{GENERATE_BSON}}`) and **create** a file without the .template extension with the right **generated code instead of the comment**.
 
 The part of the code that will be probably changed more frequently is the part where the **code is generated**. It resides in the `source/generators` folder. All files with extension **.generator.ts** contain a class that extends the **Generator class**: they have a **generate** method that generates the code in base of the structure.json and a **comment field**, which is the comment string where the generated code will be put. To **add a new generator**, it is only needed to add a new file ending with **.generator.ts** containing a class extending **Generator** and properly implemented. All the rest of the code will remain unchanged.
 
@@ -39,13 +39,14 @@ Running this script:
 const generator = require('eagletrt-code-generator');
 
 const src = './code';
-const structure = './code/structure.model.json';
+const structureModel = './code/structure.model.json';
+const configModel = './code/config.model.json';
 const options = {
     extensions: ['c', 'h', 'cpp', 'hpp'],
     log: true
 };
 
-generator.generate(src, structure, options);
+generator.generate(src, structureModel, configModel, options);
 ```
 
 Given a directory tree such as:
@@ -220,6 +221,50 @@ A javascript instance of that structure could be:
 
 Where every array contains all the messages of a certain type, arrived in x milliseconds.
 
+The passed structure.model.json is checked with **[this json schema](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/source/lib/schemas/structure.schema.json)**.
+
+## The config model file
+
+The config model file is a **json** file that **represents how will be the json config** of the telemetry.
+
+This model has the purpose of declaring the possible options, that can be nested objects, arrays or primitive values. It declares also the **default** value if that option will not be specified by the configuration file.
+
+It is an object that can contain:
+* `string` or `number` as primitive default values.
+* Arrays of `string` or `number` as default array values. These arrays __have to be homogeneus__ and there can be arrays of strings, integers (no decimal part) or floating point (no integer accepted).
+* Nested objects satisfying the two previous constraints in order to group related options together.
+
+An example of config could be this:
+
+```json
+{
+    "can_interface": "can0",
+    "rate": 500,
+    "inc": 1.5,
+    "pilots": [ "default", "Ivan", "Davide" ],
+    "mqtt": {
+        "hostname": "localhost",
+        "port": 1883,
+        "topic": "telemetria"
+    }
+}
+```
+A config.json satisfying that model could be:
+
+```json
+{
+    "can_interface": "vcan0",
+    "rate": 250,
+    "mqtt": {
+        "topic": "test"
+    }
+}
+```
+
+Where the three specified values will override the default values specified in the config.model.json.
+
+The passed config.model.json is checked with **[this json schema](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/source/lib/schemas/config.schema.json)**.
+
 ## The generators
 
 The generators are the **typescript classes** that replace a certain **special comment** with the **generated code**.
@@ -248,7 +293,41 @@ The generators are the **typescript classes** that replace a certain **special c
 | --- | --- | --- | --- |
 | {{GENERATE_STRUCTURE_DEALLOCATOR}} | Generates the code of the function that deallocates the structure | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/structure_service/structure_deallocator.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/structure_service/structure_deallocator.c) |
 
+### config-type.generator
+
+| Comment | Description | template example | compiled example |
+| --- | --- | --- | --- |
+| {{GENERATE_CONFIG_TYPE}} | Generates the c struct representing the config | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/config_service/config_type.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/config_service/config_type.c) |
+
+### config-allocator.generator
+
+| Comment | Description | template example | compiled example |
+| --- | --- | --- | --- |
+| {{GENERATE_CONFIG_ALLOCATOR}} | Generates the code of the function that allocates the config struct instance | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/config_service/config_allocator.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/config_service/config_allocator.c) |
+
+### config-deallocator.generator
+
+| Comment | Description | template example | compiled example |
+| --- | --- | --- | --- |
+| {{GENERATE_CONFIG_DEALLOCATOR}} | Generates the code of the function that deallocates the config struct instance | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/config_service/config_deallocator.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/config_service/config_deallocator.c) |
+
+### config-print.generator
+
+| Comment | Description | template example | compiled example |
+| --- | --- | --- | --- |
+| {{GENERATE_CONFIG_PRINT}} | Generates the code of the function that prints the config struct instance | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/config_service/config_print.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/config_service/config_print.c) |
+
+### config-parser.generator
+
+| Comment | Description | template example | compiled example |
+| --- | --- | --- | --- |
+| {{GENERATE_CONFIG_PARSER}} | Generates the code of the functions that parses the given json file and assigns it to the config struct instance | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/config_service/config_parser.template.c) | [link](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/docs/example/config_service/config_parser.c) |
+
 ## API
+
+Using **typedoc**, the documentation is published with **vercel** at [https://eagletrt-code-generator.euberdeveloper.now.sh](https://eagletrt-code-generator.euberdeveloper.now.sh).
+
+The documentation for the mantainers is published with **vercel** at [https://eagletrt-code-generator-dev.euberdeveloper.now.sh](https://eagletrt-code-generator-dev.euberdeveloper.now.sh).
 
 ### generate
 
@@ -263,8 +342,8 @@ Fetches all the template files in the given folder (files whose extension is pre
 **Parameters:**
 
 * __src__: Optional. The folder where the template files will be fetched from. The default is the current folder.
-* __structure__: Optional. The path to the json file containing the structure model, used by generators to dynamically generate code about the data structure. The default is `structure.model.json`.
-* __config__: Optional. The path to the json file containing the config model, used by generators to dynamically generate code about the config parser. The default is `config.model.json`.
+* __structureModel__: Optional. The path to the json file containing the structure model, used by generators to dynamically generate code about the data structure. The default is `structure.model.json`.
+* __configModel__: Optional. The path to the json file containing the config model, used by generators to dynamically generate code about the config parser. The default is `config.model.json`.
 * __options__: Optional. The options `object` specifying things such as logging, indentation and filters on the files
 
 **Options parameters:**
@@ -283,6 +362,17 @@ This module was used in the telemetry sender [repo](https://github.com/eagletrt/
   <img src="https://github.com/euberdeveloper/eagletrt-code-generator/raw/master/docs/videos/demo.gif">
 </p>
 
+## Test
+
+The tests were made by **[Nicola Toscan](https://github.com/NicolaToscan)** with **mocha** and **typescript**.
+
+To run the tests execute:
+
+```bash
+npm run transpile:test
+npm test
+```
+
 ## Project structure
 
 Made with [dree](https://github.com/euberdeveloper/dree)
@@ -294,31 +384,55 @@ eagletrt-code-generator
  ├── package-lock.json
  ├── package.json
  ├─> dist
+ │   ├─> source
+ │   │   ├─> bin
+ │   │   └─> lib
+ │   └─> test
  ├─> docs
  │   ├─> directory-tree
  │   ├─> example
  │   └─> videos
- └─> source
-     ├─> bin
-     │   └── index.ts
-     ├─> lib
-     │   ├─> generators
-     │   │   ├─> bson
-     │   │   │   └── bson.generator.ts
-     │   │   ├── index.ts
-     │   │   └─> structure
-     │   │       ├── structure-allocator.generator.ts
-     │   │       ├── structure-deallocator.generator.ts
-     │   │       ├── structure-type.generator.ts
-     │   │       └── structureGenerator.ts
-     │   ├── index.ts
-     │   ├─> types
-     │   │   └── index.ts
-     │   └─> utils
-     │       ├── getCodes.ts
-     │       ├── logger.ts
-     │       ├── options.ts
-     │       ├── parseTemplate.ts
-     │       └── transpile.ts
-     └── tsconfig.json
+ ├─> source
+ │   ├─> bin
+ │   │   └── index.ts
+ │   ├─> lib
+ │   │   ├── index.ts
+ │   │   ├─> generators
+ │   │   │   ├─> bson
+ │   │   │   │   └── bson.generator.ts
+ │   │   │   ├─> config
+ │   │   │   │   ├── config-allocator.generator.ts
+ │   │   │   │   ├── config-deallocator.generator.ts
+ │   │   │   │   ├── config-parser.generator.ts
+ │   │   │   │   ├── config-print.generator.ts
+ │   │   │   │   ├── config-type.generator.ts
+ │   │   │   │   └── configGenerator.ts
+ │   │   │   ├── index.ts
+ │   │   │   └─> structure
+ │   │   │       ├── structure-allocator.generator.ts
+ │   │   │       ├── structure-deallocator.generator.ts
+ │   │   │       ├── structure-type.generator.ts
+ │   │   │       └── structureGenerator.ts
+ │   │   ├─> schemas
+ │   │   │   ├── config.schema.json
+ │   │   │   └── structure.schema.json
+ │   │   ├─> types
+ │   │   │   ├─> config
+ │   │   │   │   └── index.ts
+ │   │   │   ├─> generator
+ │   │   │   │   └── index.ts
+ │   │   │   ├── index.ts
+ │   │   │   ├─> options
+ │   │   │   │   └── index.ts
+ │   │   │   └─> structure
+ │   │   │       └── index.ts
+ │   │   └─> utils
+ │   │       ├── checkModelsSchema.ts
+ │   │       ├── getCodes.ts
+ │   │       ├── logger.ts
+ │   │       ├── options.ts
+ │   │       ├── parseTemplate.ts
+ │   │       └── transpile.ts
+ │   └── tsconfig.json
+ └─> test
 ```

@@ -3,17 +3,23 @@
     "exclude": [
         "node_modules",
         "git",
+        "lcov-report",
+        "coverage",
 
         "directory-tree\\",
         "example\\",
         "videos\\",
-        "dist\\bin",
-        "dist\\lib",
+        "dist\\source\\bin\\",
+        "dist\\source\\lib\\",
+        "dist\\test\\",
+        "test\\",
         
         "directory-tree/",
         "example/",
         "videos/",
-        "dist/bin",
-        "dist/lib"
+        "dist/source/bin/",
+        "dist/source/lib/",
+        "dist/test/",
+        "test/"
     ]
 }
