@@ -4,3 +4,4 @@ docs
 .eslintrc.js
 .gitignore
 .travis.yml
+dist/test

@@ -2,20 +2,28 @@
   "name": "eagletrt-code-generator",
   "version": "2.3.1",
   "description": "Generate dinamically code for the eagletrt telemetry",
-  "main": "dist/lib/index.js",
+  "main": "dist/source/lib/index.js",
   "bin": {
-    "eagle": "dist/bin/index.js"
+    "eagle": "dist/source/bin/index.js"
   },
   "scripts": {
-    "transpile:source": "tsc --project source",
+    "nyc": "nyc --extension=ts --reporter=html --reporter=text --reporter=lcov -x \"source/test\" npm run test",
+
+    "serve:test": "npm run transpile:test && npm run test",
+    "test": "mocha ./dist/test/test/**/*.test.js --reporter spec",
+    "start:reference": "node ./dist/test/test/generateReferenceFiles",
+    
     "transpile:test": "tsc --project test",
+    "transpile:source": "tsc --project source",
     "transpile": "npm run transpile:source",
+
     "lint:source": "eslint source/**/*.ts --format codeframe",
     "lint:fix:source": "eslint --fix source/**/*.ts --format codeframe",
     "lint:test": "eslint test/**/*.ts --format codeframe",
     "lint:fix:test": "eslint --fix test/**/*.ts --format codeframe",
     "lint": "npm run lint:source",
     "lint:fix": "npm run lint:fix:source",
+
     "docs:html": "typedoc --mode library --inputFiles source/lib/index.ts --excludeExternals --excludeNotExported --includeVersion --tsconfig source/tsconfig.json --out docs/documentation/html",
     "docs:html-dev": "typedoc --mode module --name 'eagletrt-code-generator - DEV' --includeVersion --tsconfig source/tsconfig.json --out docs/documentation/html-dev",
     "docs:deploy:html": "vercel docs/documentation/html --name eagletrt-code-generator --confirm --prod --token $VERCEL_TOKEN",
@@ -23,6 +31,7 @@
     "docs:deploy": "npm run docs:deploy:html && npm run docs:deploy:html-dev",
     "docs:tree": "dree parse . --dest docs/directory-tree --name tree --options docs/directory-tree/dree.json",
     "docs": "npm run docs:html && npm run docs:html-dev && npm run docs:deploy",
+    
     "commit": "git-cz"
   },
   "repository": {
@@ -43,14 +52,21 @@
   "homepage": "https://eagletrt-code-generator.euberdeveloper.now.sh",
   "devDependencies": {
     "@euberdeveloper/eslint-config-typescript": "^1.0.0",
+    "@types/chai": "^4.2.13",
+    "@types/mocha": "^8.0.3",
     "@types/node": "^14.11.2",
+    "@types/rewire": "^2.5.28",
     "@types/yargs": "^15.0.7",
+    "chai": "^4.2.0",
     "commitizen": "^4.2.1",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.10.0",
+    "mocha": "^8.1.3",
+    "rewire": "^5.0.0",
     "typedoc": "^0.17.0-3",
     "typescript": "^4.0.3",
-    "vercel": "^20.1.1"
+    "vercel": "^20.1.1",
+    "nyc": "^15.1.0" 
   },
   "dependencies": {
     "ajv": "^6.12.5",
