@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import { assert } from 'chai';
 import { Code } from '../../source/lib/types';
 import rewire = require('rewire');
-import * as fs from 'fs';
 
-import * as Dree from 'dree';
+import * as dree from 'dree';
 import { mergeOptions } from '../../source/lib/utils/options';
 import { parseTemplate } from './../../source/lib/utils/parseTemplate';
 import { compareObjects, getTemplateFilesPath, testConfig } from '../testUtils';
@@ -29,7 +27,6 @@ describe('Utils', function () {
 
     afterEach(function () {
         console.log = originalLogFunction;
-        // eslint-disable-next-line @typescript-eslint/no-invalid-this
         if (this.currentTest?.state === 'failed') {
             console.log(output);
         }
@@ -108,8 +105,9 @@ describe('Utils', function () {
                 for (let path of paths.toTestPaths) {
                     try {
                         checkModelsSchema(path + '/structure.model.json', path + '/config.model.json');
-                    } catch (error) {
-                        assert(false, `Model ${path} not validated`)                        
+                    }
+                    catch (error) {
+                        assert(false, `Model ${path} not validated`);                        
                     }
                 }
             });
@@ -117,14 +115,15 @@ describe('Utils', function () {
             it('should not validate incorrect model schemas', function () {
 
                 let incorrectJsonDirs: string[] = [];
-                Dree.scan(`${testConfig.assetsPath}/invalid-json`, { depth: 1 }, () => { }, (dir) => {
+                dree.scan(`${testConfig.assetsPath}/invalid-json`, { depth: 1 }, undefined, (dir) => {
                     incorrectJsonDirs.push(dir.path);
                 });
                 for (let path of incorrectJsonDirs) {
                     try {
                         checkModelsSchema(path + '/structure.model.json', path + '/config.model.json');
                         assert(false, `Invalid model ${path} validated`);
-                    } catch (error) {
+                    }
+                    catch (error) {
                     }
                 }
             });

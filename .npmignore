@@ -1,7 +1,10 @@
 node_modules
 source
+test
 docs
+dist/test
+coverage
+.nyc_output
 .eslintrc.js
 .gitignore
 .travis.yml
-dist/test

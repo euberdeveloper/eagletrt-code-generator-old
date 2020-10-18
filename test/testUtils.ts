@@ -1,32 +1,43 @@
-import * as Dree from 'dree';
+import * as dree from 'dree';
+import * as path from 'path';
 import { generate } from '../source/lib/index';
 
 export const testConfig = {
-    assetsPath: './test/test-assets'
+    assetsPath: path.join(process.cwd(), 'test', 'test-assets')
 };
 
 export function getDirToTest (folder: string): string[] {
-    return Dree.scan(`${testConfig.assetsPath}/${folder}`, { depth: 1 }).children!.filter(c => c.type == Dree.Type.DIRECTORY).map(c => c.path);
+    return dree
+        .scan(path.join(testConfig.assetsPath, folder), { depth: 1 })
+        .children!
+        .filter(c => c.type == dree.Type.DIRECTORY)
+        .map(c => c.path);
 }
 
 export function compareObjects (a: any, b: any): boolean {
-    if (a === b)
-        return true;
-    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    if ((a && !b) || (!a && b))
-        return false;
-        
-    if (Array.isArray(a) && Array.isArray(b)) {
-        if (a.length !== b.length)
-            return false;
-        for (let i = 0; i < a.length; i++)
-            if (!compareObjects(a[i], b[i]))
-                return false;
+    if (a === b) {
         return true;
     }
 
-    if (typeof a !== typeof b)
+    if ((a && !b) || (!a && b)) {
         return false;
+    }
+
+    if (Array.isArray(a) && Array.isArray(b)) {
+        if (a.length !== b.length) {
+            return false;
+        }
+        for (let i = 0; i < a.length; i++) {
+            if (!compareObjects(a[i], b[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    if (typeof a !== typeof b) {
+        return false;
+    }
 
     if (typeof a === 'object') {
         for (const k in a) {
@@ -50,8 +61,8 @@ export function getTemplateFilesPath (): { templateFilePaths: string[]; toTestPa
     const templateFilePaths: string[] = [];
     const toTestPaths = getDirToTest('generate');
     for (const toTestPath of toTestPaths) {
-        Dree.scan(toTestPath + '/templates', {}, (elem) => {
-            if (RegExp(/^.*\.template\..*$/).exec(elem.name)) {
+        dree.scan(path.join(toTestPath, 'templates'), {}, elem => {
+            if (/^.*\.template\..*$/.exec(elem.name)) {
                 templateFilePaths.push(elem.path);
             }
         });
@@ -62,16 +73,18 @@ export function getTemplateFilesPath (): { templateFilePaths: string[]; toTestPa
 
 export function generateEverything (toTestPaths: string[]): void {
     for (const toTestPath of toTestPaths) {
-        generate(toTestPath + '/templates', toTestPath + '/structure.model.json', toTestPath + '/config.model.json');
+        generate(path.join(toTestPath, 'templates'), path.join(toTestPath, 'structure.model.json'), path.join(toTestPath, 'config.model.json'));
     }
 }
 
 export function removeCodeFormatting(code: string) {
-    return code.split('\n').map(l => l.trim()).join();
-
+    return code
+        .split('\n')
+        .map(l => l.trim())
+        .join();
 } 
 
-export type ReferenceCode = {
+export interface ReferenceCode {
     almostempty: { [key: string]: string };
     tests: { [key: string]: { [key: string]: string } };
 };

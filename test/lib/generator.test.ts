@@ -29,7 +29,6 @@ describe('Generator', function () {
 
     afterEach(function () {
         console.log = originalLogFunction;
-        // eslint-disable-next-line @typescript-eslint/no-invalid-this
         if (this.currentTest?.state === 'failed') {
             console.log(output);
         }

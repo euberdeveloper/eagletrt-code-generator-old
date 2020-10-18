@@ -14,11 +14,11 @@
 
 // -------------------
 
-//{{GENERATE_BSON}}
+// {{GENERATE_BSON}}
 
 // -------------------
 
-//{{GENERATE_STRUCTURE_DEALLOCATOR}}
+// {{GENERATE_STRUCTURE_DEALLOCATOR}}
 
 // -------------------
 
