@@ -19,7 +19,7 @@ describe('Utils', function() {
 
     const originalLogFunction = console.log;
     let output = '';
-    beforeEach(() => {
+    beforeEach(function() {
         output = '';
         console.log = (msg: string) => {
             output += msg + '\n';
@@ -33,7 +33,7 @@ describe('Utils', function() {
         }
     });
 
-    describe('logger', () => {
+    describe('logger', function() {
 
 
         it('should not log', function() {
@@ -53,7 +53,7 @@ describe('Utils', function() {
             let res = '';
 
             console.log = (log) => {
-                assert(log === res, `Logged ${JSON.stringify(log)} instead of ${JSON.stringify(res)}`);
+                assert(JSON.stringify(log) === JSON.stringify(res), `Logged ${JSON.stringify(log)} instead of ${JSON.stringify(res)}`);
             };
 
             res = '\u001b[1m\u001b[31m[TAG1]\u001b[39m\u001b[22m test';
@@ -110,7 +110,7 @@ describe('Utils', function() {
     });
 
 
-    describe('parseTemplate', () => {
+    describe('parseTemplate', function() {
 
         describe('#parseTemplate(template: string, codes: Code[], options: Options): string', function() {
             it('should transpile everything', function() {
@@ -152,7 +152,7 @@ describe('Utils', function() {
 
     });
 
-    describe('options', () => {
+    describe('options', function() {
 
         describe('#mergeOptions(options: Options): Options', function() {
             const DEFAULT_OPTIONS = rewire('../../source/lib/utils/options').__get__('DEFAULT_OPTIONS');
@@ -175,7 +175,7 @@ describe('Utils', function() {
     });
 
 
-    describe('checkModelsSchema', () => {
+    describe('checkModelsSchema', function() {
 
         describe('#checkModelsSchema(structureModel: string, configModel: string): { structureModelObject: StructureModel, configModelObject: ConfigModel }', function() {
 

@@ -5,14 +5,14 @@ import getGenerators from '../../source/lib/generators';
 import { Logger } from '../../source/lib/utils/logger';
 
 
-describe('Generator', function () {
+describe('Generator', function() {
 
     let paths: { templateFilePaths: string[]; toTestPaths: string[]} = { templateFilePaths: [], toTestPaths: [] };
-    before(() => {
+    before(function() {
         paths = getTemplateFilesPath();
     });
 
-    after(() => {
+    after(function() {
         for (const templateFilePath of paths.templateFilePaths) {
             fs.unlinkSync(getFileNameFromTemplate(templateFilePath));
         }
@@ -20,14 +20,14 @@ describe('Generator', function () {
 
     const originalLogFunction = console.log;
     let output = '';
-    beforeEach(() => {
+    beforeEach(function() {
         output = '';
         console.log = (msg: string) => {
             output += msg + '\n';
         };
     });
 
-    afterEach(function () {
+    afterEach(function() {
         console.log = originalLogFunction;
         if (this.currentTest?.state === 'failed') {
             console.log(output);
@@ -35,20 +35,21 @@ describe('Generator', function () {
     });
 
     
-    describe('#constructor(structure: StructureModel, config: ConfigModel)', () => {
+    describe('#constructor(structure: StructureModel, config: ConfigModel)', function() {
 
         let referenceCode: ReferenceCode = { almostempty: {}, tests: {} };
-        before(function () {
+        before(function() {
             referenceCode = JSON.parse(fs.readFileSync(`${testConfig.assetsPath}/codereference.json`, 'utf-8'));
         });
 
-        it(`should get generators`, () => {
+        it(`should get generators`, function(done) {
             let generators = getGenerators(new Logger({}));
             assert(generators.length > 0, '0 generator created');
+            done();
         });
 
 
-        it(`should generate identical formatting and code for almost empty structure and config`, () => {
+        it(`should generate identical formatting and code for almost empty structure and config`, function() {
             let generators = getGenerators(new Logger({}));
             for (let generator of generators) {
                 let gen = new generator({id: 'int', sessionName: 'char*', timestamp: 'long'} as any, {}).generated;
@@ -63,7 +64,7 @@ describe('Generator', function () {
             }
         });
 
-        it(`should generate identical formatting and code for test folder structures and configs`, () => {
+        it(`should generate identical formatting and code for test folder structures and configs`, function() {
 
             let generators = getGenerators(new Logger({}));
             for (const toTestPath of paths.toTestPaths) {
@@ -89,9 +90,9 @@ describe('Generator', function () {
     });
 
 
-    describe('#generate(src?: string, structureModel?: string, configModel?: string, options?: Options): void', () => {
+    describe('#generate(src?: string, structureModel?: string, configModel?: string, options?: Options): void', function() {
 
-        it('should generate files', () => {
+        it('should generate files', function() {
             generateEverything(paths.toTestPaths);
             //CHECK
             for (const templateFilePath of paths.templateFilePaths) {
@@ -100,7 +101,7 @@ describe('Generator', function () {
             }
         });
 
-        it('content should be identical', () => {
+        it('content should be identical', function() {
             for (const templateFilePath of paths.templateFilePaths) {
                 const toCompare = getFileNameFromTemplate(templateFilePath);
                 const asReference = getCorrectFileNameFromTemplate(templateFilePath);
@@ -112,7 +113,7 @@ describe('Generator', function () {
             }
         });
 
-        it('content and formatting should be identical', () => {
+        it('content and formatting should be identical', function() {
             for (const templateFilePath of paths.templateFilePaths) {
                 const toCompare = getFileNameFromTemplate(templateFilePath);
                 const asReference = getCorrectFileNameFromTemplate(templateFilePath);
