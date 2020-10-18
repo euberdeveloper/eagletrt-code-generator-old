@@ -51,7 +51,7 @@ class StructureTypeGenerator extends StructureGenerator {
     }
 
     /**
-     * Given the structure model generates the code that allocates the data structure.
+     * Given the structure model generates the code that generates the data structure's struct.
      * @param data The structure model or one of its nested property values.
      * @param name The name of the current key.
      */
