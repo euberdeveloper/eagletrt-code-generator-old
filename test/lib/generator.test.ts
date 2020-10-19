@@ -43,6 +43,7 @@ describe('Generator', function() {
         });
 
         it('should get generators', function() {
+            this.timeout(20000);
             let generators = getGenerators(new Logger({}));
             let count = 0;
             for (let generator of generators) {
