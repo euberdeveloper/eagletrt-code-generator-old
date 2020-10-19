@@ -42,17 +42,22 @@ describe('Generator', function() {
             referenceCode = JSON.parse(fs.readFileSync(`${testConfig.assetsPath}/codereference.json`, 'utf-8'));
         });
 
-        it(`should get generators`, function() {
+        it('should get generators', function() {
             let generators = getGenerators(new Logger({}));
-            console.log('Array generators returned');
-            assert.isArray(generators, 'generators not created');
+            let count = 0;
+            for (let generator of generators) {
+                const gen = new generator({id: 'int', sessionName: 'char*', timestamp: 'long'} as any, {}).generated;
+                assert.isString(gen.code, 'Generated code is not a string');
+                count++;
+            }
+            assert(count > 0, '0 generators created');
         });
 
 
-        it(`should generate identical formatting and code for almost empty structure and config`, function() {
-            let generators = getGenerators(new Logger({}));
-            for (let generator of generators) {
-                let gen = new generator({id: 'int', sessionName: 'char*', timestamp: 'long'} as any, {}).generated;
+        it('should generate identical formatting and code for almost empty structure and config', function() {
+            const generators = getGenerators(new Logger({}));
+            for (const generator of generators) {
+                const gen = new generator({id: 'int', sessionName: 'char*', timestamp: 'long'} as any, {}).generated;
                 assert(gen.comment ? true : false, `No comment for generator ${generator.name}`);
                 if (referenceCode.almostempty[gen.comment] === undefined) {
                     assert(false, `No reference code for ${gen.comment}`);
@@ -64,16 +69,16 @@ describe('Generator', function() {
             }
         });
 
-        it(`should generate identical formatting and code for test folder structures and configs`, function() {
+        it('should generate identical formatting and code for test folder structures and configs', function() {
 
-            let generators = getGenerators(new Logger({}));
+            const generators = getGenerators(new Logger({}));
             for (const toTestPath of paths.toTestPaths) {
                 if (referenceCode.tests[toTestPath] === undefined) {
                     assert(false, `No reference code for ${toTestPath}`);
                 }
                 else {
-                    for (let generator of generators) {
-                        let gen = new generator(JSON.parse(fs.readFileSync(toTestPath + '/structure.model.json', 'utf-8')), JSON.parse(fs.readFileSync(toTestPath + '/config.model.json', 'utf-8'))).generated;
+                    for (const generator of generators) {
+                        const gen = new generator(JSON.parse(fs.readFileSync(toTestPath + '/structure.model.json', 'utf-8')), JSON.parse(fs.readFileSync(toTestPath + '/config.model.json', 'utf-8'))).generated;
                         assert(gen.comment ? true : false, `No comment for generator ${generator.name}`);
                         if (referenceCode.tests[toTestPath][gen.comment] === undefined) {
                             assert(false, `No reference code for ${gen.comment} in ${toTestPath}`);
