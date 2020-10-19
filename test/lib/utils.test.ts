@@ -8,6 +8,7 @@ import { parseTemplate } from './../../source/lib/utils/parseTemplate';
 import { compareObjects, getTemplateFilesPath, testConfig } from '../testUtils';
 import { checkModelsSchema } from '../../source/lib/utils/checkModelsSchema';
 import { Logger } from '../../source/lib/utils/logger';
+import * as chalk from 'chalk';
 
 
 describe('Utils', function() {
@@ -56,55 +57,54 @@ describe('Utils', function() {
                 assert(JSON.stringify(log) === JSON.stringify(res), `Logged ${JSON.stringify(log)} instead of ${JSON.stringify(res)}`);
             };
 
-            res = '\u001b[1m\u001b[31m[TAG1]\u001b[39m\u001b[22m test';
+            res = `${chalk.bold.red('[TAG1]')} test`;
             logger.error('test', 'TAG1', false);
-            res = '\u001b[1m\u001b[32m[TAG1]\u001b[39m\u001b[22m test';
+            res = `${chalk.bold.green('[TAG1]')} test`;
             logger.succ('test', 'TAG1', false);
-            res = '\u001b[1m\u001b[33m[TAG1]\u001b[39m\u001b[22m test';
+            res = `${chalk.bold.yellow('[TAG1]')} test`;
             logger.warn('test', 'TAG1', false);
-            res = '\u001b[1m\u001b[34m[TAG1]\u001b[39m\u001b[22m test';
+            res = `${chalk.bold.blue('[TAG1]')} test`;
             logger.info('test', 'TAG1', false);
 
-            res = '\u001b[1m\u001b[31m[ ]\u001b[39m\u001b[22m ';
+            res = `${chalk.bold.red('[ ]')} `;
             logger.error('', ' ', false);
-            res = '\u001b[1m\u001b[32m[ ]\u001b[39m\u001b[22m ';
+            res = `${chalk.bold.green('[ ]')} `;
             logger.succ('', ' ', false);
-            res = '\u001b[1m\u001b[33m[ ]\u001b[39m\u001b[22m ';
+            res = `${chalk.bold.yellow('[ ]')} `;
             logger.warn('', ' ', false);
-            res = '\u001b[1m\u001b[34m[ ]\u001b[39m\u001b[22m ';
+            res = `${chalk.bold.blue('[ ]')} `;
             logger.info('', ' ', false);
 
-            res = '\u001b[1m\u001b[31m[ERROR]\u001b[39m\u001b[22m ';
+            res = `${chalk.bold.red('[ERROR]')} `;
             logger.error('', '', false);
             logger.error('', undefined, false);
-            res = '\u001b[1m\u001b[32m[SUCCESS]\u001b[39m\u001b[22m ';
+            res = `${chalk.bold.green('[SUCCESS]')} `;
             logger.succ('', '', false);
             logger.succ('', undefined, false);
-            res = '\u001b[1m\u001b[33m[WARNING]\u001b[39m\u001b[22m ';
+            res = `${chalk.bold.yellow('[WARNING]')} `;
             logger.warn('', '', false);
             logger.warn('', undefined, false);
-            res = '\u001b[1m\u001b[34m[INFO]\u001b[39m\u001b[22m ';
+            res = `${chalk.bold.blue('[INFO]')} `;
             logger.info('', '', false);
             logger.info('', undefined, false);
-            
-            res = '\u001b[1m\u001b[31m[ERROR]\u001b[39m\u001b[22m \u001b[1m\u001b[3m\u001b[34mtest.txt\u001b[39m\u001b[23m\u001b[22m';
+
+            res = `${chalk.bold.red('[ERROR]')} ${chalk.bold.italic.blue('test.txt')}`;
             logger.error('test.txt', '', true);
-            res = '\u001b[1m\u001b[32m[SUCCESS]\u001b[39m\u001b[22m \u001b[1m\u001b[3m\u001b[34mtest.txt\u001b[39m\u001b[23m\u001b[22m';
+            res = `${chalk.bold.green('[SUCCESS]')} ${chalk.bold.italic.blue('test.txt')}`;
             logger.succ('test.txt', '', true);
-            res = '\u001b[1m\u001b[33m[WARNING]\u001b[39m\u001b[22m \u001b[1m\u001b[3m\u001b[34mtest.txt\u001b[39m\u001b[23m\u001b[22m';
+            res = `${chalk.bold.yellow('[WARNING]')} ${chalk.bold.italic.blue('test.txt')}`;
             logger.warn('test.txt', '', true);
-            res = '\u001b[1m\u001b[34m[INFO]\u001b[39m\u001b[22m \u001b[1m\u001b[3m\u001b[34mtest.txt\u001b[39m\u001b[23m\u001b[22m';
+            res = `${chalk.bold.blue('[INFO]')} ${chalk.bold.italic.blue('test.txt')}`;
             logger.info('test.txt', '', true);
 
-            res = '\u001b[1m\u001b[31m[ERROR]\u001b[39m\u001b[22m \u001b[3m\u001b[38;2;197;200;198mpath/\u001b[39m\u001b[23m\u001b[1m\u001b[3m\u001b[34mtest.txt\u001b[39m\u001b[23m\u001b[22m';
+            res = `${chalk.bold.red('[ERROR]')} ${chalk.italic.hex('#C5C8C6')('path/')}${chalk.bold.italic.blue('test.txt')}`;
             logger.error('path/test.txt', '', true);
-            res = '\u001b[1m\u001b[32m[SUCCESS]\u001b[39m\u001b[22m \u001b[3m\u001b[38;2;197;200;198mpath/\u001b[39m\u001b[23m\u001b[1m\u001b[3m\u001b[34mtest.txt\u001b[39m\u001b[23m\u001b[22m';
+            res = `${chalk.bold.green('[SUCCESS]')} ${chalk.italic.hex('#C5C8C6')('path/')}${chalk.bold.italic.blue('test.txt')}`;
             logger.succ('path/test.txt', '', true);
-            res = '\u001b[1m\u001b[33m[WARNING]\u001b[39m\u001b[22m \u001b[3m\u001b[38;2;197;200;198mpath/\u001b[39m\u001b[23m\u001b[1m\u001b[3m\u001b[34mtest.txt\u001b[39m\u001b[23m\u001b[22m';
+            res = `${chalk.bold.yellow('[WARNING]')} ${chalk.italic.hex('#C5C8C6')('path/')}${chalk.bold.italic.blue('test.txt')}`;
             logger.warn('path/test.txt', '', true);
-            res = '\u001b[1m\u001b[34m[INFO]\u001b[39m\u001b[22m \u001b[3m\u001b[38;2;197;200;198mpath/\u001b[39m\u001b[23m\u001b[1m\u001b[3m\u001b[34mtest.txt\u001b[39m\u001b[23m\u001b[22m';
+            res = `${chalk.bold.blue('[INFO]')} ${chalk.italic.hex('#C5C8C6')('path/')}${chalk.bold.italic.blue('test.txt')}`;
             logger.info('path/test.txt', '', true);
-
         });
 
     });
