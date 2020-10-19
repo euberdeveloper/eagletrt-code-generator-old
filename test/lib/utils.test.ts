@@ -5,7 +5,7 @@ import rewire = require('rewire');
 import * as dree from 'dree';
 import { mergeOptions } from '../../source/lib/utils/options';
 import { parseTemplate } from './../../source/lib/utils/parseTemplate';
-import { compareObjects, getTemplateFilesPath, testConfig } from '../testUtils';
+import { getTemplateFilesPath, testConfig } from '../testUtils';
 import { checkModelsSchema } from '../../source/lib/utils/checkModelsSchema';
 import { Logger } from '../../source/lib/utils/logger';
 import * as chalk from 'chalk';
@@ -154,7 +154,7 @@ describe('Utils', function() {
             const DEFAULT_OPTIONS = rewire('../../source/lib/utils/options').__get__('DEFAULT_OPTIONS');
 
             it('should get default option', function() {
-                assert(compareObjects(DEFAULT_OPTIONS, mergeOptions({})), 'Object different');
+                assert.deepEqual(DEFAULT_OPTIONS, mergeOptions({}), 'Object different');
             });
 
             it('should overide default option', function() {
@@ -164,7 +164,8 @@ describe('Utils', function() {
                 const res2 = mergeOptions({ log: true });
                 const expected2: any = {};
                 Object.assign(expected2, DEFAULT_OPTIONS).log = true;
-                assert(compareObjects(res1, expected1) && compareObjects(res2, expected2), 'Property not overriden');
+                assert.deepEqual(res1, expected1, 'Property not overriden');
+                assert.deepEqual(res2, expected2, 'Property not overriden');
             });
         });
 

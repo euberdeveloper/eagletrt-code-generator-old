@@ -42,10 +42,10 @@ describe('Generator', function() {
             referenceCode = JSON.parse(fs.readFileSync(`${testConfig.assetsPath}/codereference.json`, 'utf-8'));
         });
 
-        it(`should get generators`, function(done) {
+        it(`should get generators`, function() {
             let generators = getGenerators(new Logger({}));
-            assert(generators.length > 0, '0 generator created');
-            done();
+            console.log('Array generators returned');
+            assert.isArray(generators, 'generators not created');
         });
 
 

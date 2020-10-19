@@ -6,7 +6,7 @@ export const testConfig = {
     assetsPath: path.join(process.cwd(), 'test', 'test-assets')
 };
 
-export function getDirToTest (folder: string): string[] {
+export function getDirToTest(folder: string): string[] {
     return dree
         .scan(path.join(testConfig.assetsPath, folder), { depth: 1 })
         .children!
@@ -14,50 +14,15 @@ export function getDirToTest (folder: string): string[] {
         .map(c => c.path);
 }
 
-export function compareObjects (a: any, b: any): boolean {
-    if (a === b) {
-        return true;
-    }
-
-    if ((a && !b) || (!a && b)) {
-        return false;
-    }
-
-    if (Array.isArray(a) && Array.isArray(b)) {
-        if (a.length !== b.length) {
-            return false;
-        }
-        for (let i = 0; i < a.length; i++) {
-            if (!compareObjects(a[i], b[i])) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    if (typeof a !== typeof b) {
-        return false;
-    }
-
-    if (typeof a === 'object') {
-        for (const k in a) {
-            if (!compareObjects(a[k], b[k]))
-                return false;
-        }
-    }
-
-    return true;
-}
-
-export function getFileNameFromTemplate (templateFileName: string): string {
+export function getFileNameFromTemplate(templateFileName: string): string {
     return templateFileName.replace('.template', '');
 }
 
-export function getCorrectFileNameFromTemplate (templateFileName: string): string {
+export function getCorrectFileNameFromTemplate(templateFileName: string): string {
     return templateFileName.replace('.template', '.correct');
 }
 
-export function getTemplateFilesPath (): { templateFilePaths: string[]; toTestPaths: string[]} {
+export function getTemplateFilesPath(): { templateFilePaths: string[]; toTestPaths: string[]} {
     const templateFilePaths: string[] = [];
     const toTestPaths = getDirToTest('generate');
     for (const toTestPath of toTestPaths) {
@@ -71,13 +36,13 @@ export function getTemplateFilesPath (): { templateFilePaths: string[]; toTestPa
     return { templateFilePaths: templateFilePaths, toTestPaths: toTestPaths };
 }
 
-export function generateEverything (toTestPaths: string[]): void {
+export function generateEverything(toTestPaths: string[]): void {
     for (const toTestPath of toTestPaths) {
         generate(path.join(toTestPath, 'templates'), path.join(toTestPath, 'structure.model.json'), path.join(toTestPath, 'config.model.json'));
     }
 }
 
-export function removeCodeFormatting(code: string) {
+export function removeCodeFormatting(code: string): string {
     return code
         .split('\n')
         .map(l => l.trim())
@@ -87,4 +52,4 @@ export function removeCodeFormatting(code: string) {
 export interface ReferenceCode {
     almostempty: { [key: string]: string };
     tests: { [key: string]: { [key: string]: string } };
-};
+}

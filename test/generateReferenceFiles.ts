@@ -25,7 +25,9 @@ for (const generator of generators) {
 for (const toTestPath of paths.toTestPaths) {
     const toAdd = {};
     for (const generator of generators) {
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const structureModel = require(path.join(toTestPath, 'structure.model.json'));
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const configModel = require(path.join(toTestPath, 'config.model.json'));
         const generated = new generator(structureModel, configModel).generated;
         toAdd[generated.comment] = generated.code;
