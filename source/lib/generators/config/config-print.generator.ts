@@ -5,6 +5,21 @@ import { ConfigGenerator } from './configGenerator';
  * The ConfigPrintGenerator class, extending the ConfigGenerator class and generating the code that prints a config structure.
  */
 class ConfigPrintGenerator extends ConfigGenerator {
+    
+    /**
+     * The template comment that this generator handles.
+     */
+    protected comment = '{{GENERATE_CONFIG_PRINT}}';
+
+    /**
+     * The constructor of the ConfigPrintGenerator class.
+     * @param structure The structure model: the generated code will not actually depend on it.
+     * @param config The config model: the generated code will depend on it.
+     */
+    public constructor(structure: StructureModel, config: ConfigModel) {
+        super(structure, config);
+        this.generate();
+    }
 
     /**
      * Given the config primitive value, prints the code that prints it.
@@ -23,7 +38,7 @@ class ConfigPrintGenerator extends ConfigGenerator {
         const type = this.getPrimitiveType(data[0]);
         this.print(`printf("${this.propName}: ");`);
         
-        if (type === "char*") {
+        if (type === 'char*') {
             this.print(`printStringsArray(${this.propName}, ${this.propCountName});`);
         }
         else if (type === 'double') {
@@ -60,25 +75,12 @@ class ConfigPrintGenerator extends ConfigGenerator {
     }
 
     /**
-     * The template comment that this generator handles.
-     */
-    protected comment = '{{GENERATE_CONFIG_PRINT}}';
-    /**
      * The function that generates the code and assigns it to the code field.
      */
     protected generate(): void {
         this.parse(this.config, 'config');
     }
 
-    /**
-     * The constructor of the ConfigPrintGenerator class.
-     * @param structure The structure model: the generated code will not actually depend on it.
-     * @param config The config model: the generated code will depend on it.
-     */
-    constructor(structure: StructureModel, config: ConfigModel) {
-        super(structure, config);
-        this.generate();
-    }
 
 }
 

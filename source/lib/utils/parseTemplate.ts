@@ -32,9 +32,9 @@ export function parseTemplate(template: string, codes: Code[], options: Options)
         // Map every row
         .map(row => codes
             // Filter all the codes whose comment is in the row
-            .filter(code => row.indexOf(code.comment) !== -1)
+            .filter(code => row.includes(code.comment))
             // Map the code with the indentation
-            .map(code => options.indent ? addInitialIndentation(row, code.code) : code.code)
+            .map(code => (options.indent ?? false) ? addInitialIndentation(row, code.code) : code.code)
             // Join the codes
             .join('')
         // If there are not special comments, return the unmodified row 

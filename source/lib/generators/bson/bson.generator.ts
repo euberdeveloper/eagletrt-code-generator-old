@@ -12,17 +12,21 @@ interface Key {
      * If the key is an array or an object.
      */
     type: 'array' | 'object';
-};
+}
 
 /**
  * The BsonGenerator class, extending the Generator class and generating the code that creates from a data structure its bson object.
  */
 class BsonGenerator extends Generator {
-
+    
+    /**
+     * The template comment that this generator handles.
+     */
+    protected comment = '{{GENERATE_BSON}}';
     /**
      * A stack of inspected keys.
      */
-    private keys: Key[] = [];
+    private readonly keys: Key[] = [];
     /**
      * The current indentation as number of tabs.
      */
@@ -35,6 +39,16 @@ class BsonGenerator extends Generator {
      * The current nested for depth.
      */
     private forDepth = 0;
+
+    /**
+     * The constructor of the BsonGenerator class.
+     * @param structure The structure model: the generated code will depend on it.
+     * @param config The config model: the generated code will not actually depend on it.
+     */
+    public constructor(structure: StructureModel, config: ConfigModel) {
+        super(structure, config);
+        this.generate();
+    }
 
     /**
      * Prints a line of generated code, fomatting it with the indentation and adding it to the code field.
@@ -132,7 +146,7 @@ class BsonGenerator extends Generator {
      */
     private parseKey(key: Key): string {
         switch (key.type) {
-            case'array':
+            case 'array':
                 return `[${key.key}]`;
             case 'object':
                 return `.${key.key}`;
@@ -242,26 +256,12 @@ class BsonGenerator extends Generator {
     }
 
     /**
-     * The template comment that this generator handles.
-     */
-    protected comment = '{{GENERATE_BSON}}';
-    /**
      * The function that generates the code and assigns it to the code field.
      */
     protected generate(): void {
         this.print(`*bson_document = bson_new();`);
         this.print(`bson_t *children = (bson_t*)malloc(sizeof(bson_t) * ${this.maxDepth});`);
         this.firstParse(this.structure);
-    }
-
-    /**
-     * The constructor of the BsonGenerator class.
-     * @param structure The structure model: the generated code will depend on it.
-     * @param config The config model: the generated code will not actually depend on it.
-     */
-    constructor(structure: StructureModel, config: ConfigModel) {
-        super(structure, config);
-        this.generate();
     }
 
 }

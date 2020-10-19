@@ -6,6 +6,11 @@ import { ConfigGenerator } from './configGenerator';
  * The ConfigParserGenerator class, extending the ConfigGenerator class and generating the code that parses a config structure.
  */
 class ConfigParserGenerator extends ConfigGenerator {
+    
+    /**
+     * The template comment that this generator handles.
+     */
+    protected comment = '{{GENERATE_CONFIG_PARSER}}';
 
     /**
      * The current indentation as number of tabs.
@@ -14,7 +19,7 @@ class ConfigParserGenerator extends ConfigGenerator {
     /**
      * The array of generated functions.
      */
-    private functions: string[] = [];
+    private readonly functions: string[] = [];
     /**
      * The index of the function that is being currently generated.
      */
@@ -23,6 +28,16 @@ class ConfigParserGenerator extends ConfigGenerator {
      * If the current function to generate is the root one.
      */
     private isRoot = true;
+
+    /**
+     * The constructor of the ConfigParserGenerator class.
+     * @param structure The structure model: the generated code will depend on it.
+     * @param config The config model: the generated code will not actually depend on it.
+     */
+    public constructor(structure: StructureModel, config: ConfigModel) {
+        super(structure, config);
+        this.generate();
+    }
 
     /**
      * The function parameters, depending on the isRoot field.
@@ -62,10 +77,10 @@ class ConfigParserGenerator extends ConfigGenerator {
      */
     private printFunctionFirstLines(): void {
         if (this.isRoot) {
-           this.print('int _i, *i = &_i;');
-           this.print('for (*i = 1; *i < tokens_length; ++(*i)) {');
-           this.indentation++;
-           this.isRoot = false;
+            this.print('int _i, *i = &_i;');
+            this.print('for (*i = 1; *i < tokens_length; ++(*i)) {');
+            this.indentation++;
+            this.isRoot = false;
         } 
         else {
             this.print('++(*i);');
@@ -83,7 +98,7 @@ class ConfigParserGenerator extends ConfigGenerator {
      * @param content The content of the conditional block.
      */
     private printConditionalBlock(type: 'if' | 'else if' | 'else', condition: string | null, content: string[]): void {
-        this.print(type === 'else' ? `${type} {` : `${type} (${condition}) {`);
+        this.print(type === 'else' ? `${type} {` : `${type} (${condition ?? 'false'}) {`);
         this.indentation++;
         content.forEach(line => this.print(line));
         this.indentation--;
@@ -198,10 +213,6 @@ class ConfigParserGenerator extends ConfigGenerator {
     }
 
     /**
-     * The template comment that this generator handles.
-     */
-    protected comment = '{{GENERATE_CONFIG_PARSER}}';
-    /**
      * The function that generates the code and assigns it to the code field.
      */
     protected generate(): void {
@@ -209,15 +220,6 @@ class ConfigParserGenerator extends ConfigGenerator {
         this.code = this.functions.reverse().join('\n');
     }
 
-    /**
-     * The constructor of the ConfigParserGenerator class.
-     * @param structure The structure model: the generated code will depend on it.
-     * @param config The config model: the generated code will not actually depend on it.
-     */
-    constructor(structure: StructureModel, config: ConfigModel) {
-        super(structure, config);
-        this.generate();
-    }
 
 }
 

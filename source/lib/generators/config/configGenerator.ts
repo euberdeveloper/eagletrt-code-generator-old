@@ -11,6 +11,15 @@ export class ConfigGenerator extends Generator {
     protected keys: (string | number)[] = [];
 
     /**
+     * The constructor of the ConfigGenerator class.
+     * @param structure The structure model: the generated code will not actually depend on it.
+     * @param config The config model: the generated code will depend on it.
+     */
+    public constructor(structure: StructureModel, config: ConfigModel) {
+        super(structure, config);
+    }
+
+    /**
      * Given the current inspected keys, returns the name of the associated struct.
      */
     protected get structName(): string {
@@ -35,7 +44,7 @@ export class ConfigGenerator extends Generator {
             ? this.keys
                 .slice(1)
                 .filter(key => typeof key === 'string')
-                .reduce<string>((acc, curr, index) => acc + handleKey(curr as string), 'parse') + 'Object'
+                .reduce<string>((acc, curr) => acc + handleKey(curr as string), 'parse') + 'Object'
             : 'parseJsonTokens';
     }
 
@@ -49,7 +58,7 @@ export class ConfigGenerator extends Generator {
 
         return this.keys
             .slice(1)
-            .reduce<string>((accumulator, current) => accumulator + handleKey(current), this.keys[0] as string)
+            .reduce<string>((accumulator, current) => accumulator + handleKey(current), this.keys[0].toString())
             .replace('.', '->');
     }
 
@@ -70,7 +79,7 @@ export class ConfigGenerator extends Generator {
         }
 
         const last = this.keys.length - 1;
-        return `${this.keys.slice(1, last).reduce<string>((accumulator, current) => accumulator += handleKey(current), this.keys[0] as string)}.${this.countName}`
+        return `${this.keys.slice(1, last).reduce<string>((accumulator, current) => accumulator += handleKey(current), this.keys[0].toString())}.${this.countName}`
             .replace('.', '->');
     }
 
@@ -82,11 +91,14 @@ export class ConfigGenerator extends Generator {
     protected getPrimitiveType(data: ConfigPrimitive): 'char*' | 'int' | 'double' | '' {
         if (typeof data === 'string') {
             return 'char*';
-        } else if (typeof data === 'number' && data - Math.floor(data) === 0) {
-            return "int";
-        } else if (typeof data === 'number' && data - Math.floor(data) !== 0) {
-            return "double";
-        } else {
+        }
+        else if (typeof data === 'number' && data - Math.floor(data) === 0) {
+            return 'int';
+        }
+        else if (typeof data === 'number' && data - Math.floor(data) !== 0) {
+            return 'double';
+        }
+        else {
             return '';
         }
     }
@@ -101,23 +113,14 @@ export class ConfigGenerator extends Generator {
             return '%s';
         }
         else if (typeof data === 'number' && data - Math.floor(data) === 0) {
-            return "%d";
+            return '%d';
         }
         else if (typeof data === 'number' && data - Math.floor(data) !== 0) {
-            return "%f";
+            return '%f';
         }
         else {
             return '';
         }
-    }
-
-    /**
-     * The constructor of the ConfigGenerator class.
-     * @param structure The structure model: the generated code will not actually depend on it.
-     * @param config The config model: the generated code will depend on it.
-     */
-    constructor(structure: StructureModel, config: ConfigModel) {
-        super(structure, config);
     }
 
 }

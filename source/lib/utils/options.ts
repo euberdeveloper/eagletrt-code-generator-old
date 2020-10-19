@@ -17,7 +17,7 @@ const DEFAULT_OPTIONS: Options = {
  */
 export function mergeOptions(options?: Options): Options {
     const merged: Options = {};
-    options = options || {};
+    options = options ?? {};
 
     for (const key in DEFAULT_OPTIONS) {
         merged[key] = options[key] === undefined ? DEFAULT_OPTIONS[key] : options[key];

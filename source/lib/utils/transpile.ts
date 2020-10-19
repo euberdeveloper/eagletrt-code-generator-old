@@ -25,7 +25,7 @@ export function transpile(src: string, codes: Code[], options: Options, logger: 
     // Scan all the files in the directory tree of the src folder
     scan(src, scanOptions, file => {
         // If the file is a template file
-        if (file.name.indexOf('.template') !== -1) {
+        if (file.name.includes('.template')) {
             // Get its code
             const template = readFileSync(file.path, 'utf-8');
             // Get the transpiled code, replacing all the special comments with generated code

@@ -11,7 +11,7 @@ import { ConfigModel, StructureModel } from '../types';
  * @param configModel The path of the json config model.
  * @return An object containing the structure and config models.
  */
-export function checkModelsSchema(structureModel: string, configModel: string): { structureModelObject: StructureModel, configModelObject: ConfigModel } {
+export function checkModelsSchema(structureModel: string, configModel: string): { structureModelObject: StructureModel; configModelObject: ConfigModel } {
     const ajv = new Ajv();
 
     const structureModelObject: StructureModel = JSON.parse(readFileSync(structureModel, 'utf-8'));
@@ -20,10 +20,12 @@ export function checkModelsSchema(structureModel: string, configModel: string): 
     ajv.addSchema(structureSchema, 'structure-schema');
     ajv.addSchema(configSchema, 'config-schema');
 
-    if (!ajv.validate('structure-schema', structureModelObject)) {
+    //TODO: fix eslint error
+    // if (!ajv.validate('structure-schema', structureModelObject)) {
+    if (!(ajv.validate('structure-schema', structureModelObject) as boolean)) {
         throw new Error('eagletrt-code-generator error: invalid structure model');
     }
-    if (!ajv.validate('config-schema', configModelObject)) {
+    if (!(ajv.validate('config-schema', configModelObject) as boolean)) {
         throw new Error('eagletrt-code-generator error: invalid config model');
     }
 

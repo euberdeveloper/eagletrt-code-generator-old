@@ -18,4 +18,4 @@ export interface Options {
      * If the generated code will be indented the same as the comment it will substitute. Default: true
      */
     indent?: boolean;
-};
+}

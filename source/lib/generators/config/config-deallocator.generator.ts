@@ -7,6 +7,21 @@ import { ConfigGenerator } from './configGenerator';
 class ConfigDeallocatorGenerator extends ConfigGenerator {
 
     /**
+     * The template comment that this generator handles.
+     */
+    protected comment = '{{GENERATE_CONFIG_DEALLOCATOR}}';
+
+    /**
+     * The constructor of the ConfigDeallocatorGenerator class.
+     * @param structure The structure model: the generated code will not actually depend on it.
+     * @param config The config model: the generated code will depend on it.
+     */
+    public constructor(structure: StructureModel, config: ConfigModel) {
+        super(structure, config);
+        this.generate();
+    }
+
+    /**
      * Given a primitive array value, prints the C code that frees it.
      * @param data The primitive array value.
      */
@@ -46,25 +61,12 @@ class ConfigDeallocatorGenerator extends ConfigGenerator {
     }
 
     /**
-     * The template comment that this generator handles.
-     */
-    protected comment = '{{GENERATE_CONFIG_DEALLOCATOR}}';
-    /**
      * The function that generates the code and assigns it to the code field.
      */
     protected generate(): void {
         this.parse(this.config, `config`);
     }
 
-    /**
-     * The constructor of the ConfigDeallocatorGenerator class.
-     * @param structure The structure model: the generated code will not actually depend on it.
-     * @param config The config model: the generated code will depend on it.
-     */
-    constructor(structure: StructureModel, config: ConfigModel) {
-        super(structure, config);
-        this.generate();
-    }
 }
 
 export { ConfigDeallocatorGenerator as generator };

@@ -7,6 +7,21 @@ import { ConfigGenerator } from './configGenerator';
 class ConfigAllocatorGenerator extends ConfigGenerator {
 
     /**
+     * The template comment that this generator handles.
+     */
+    protected comment = '{{GENERATE_CONFIG_ALLOCATOR}}';
+
+    /**
+     * The constructor of the ConfigAllocatorGenerator class.
+     * @param structure The structure model: the generated code will not actually depend on it.
+     * @param config The config model: the generated code will depend on it.
+     */
+    public constructor(structure: StructureModel, config: ConfigModel) {
+        super(structure, config);
+        this.generate();
+    }
+
+    /**
      * Given the config primitive value, prints the code that allocates it.
      * @param data The primitive value.
      */
@@ -22,7 +37,7 @@ class ConfigAllocatorGenerator extends ConfigGenerator {
      */
     private parsePrimitiveArray(defaultValue: ConfigPrimitiveArray): void {
         const type = this.getPrimitiveType(defaultValue[0]);
-        this.print(`${this.propCountName} = ${defaultValue.length};`)
+        this.print(`${this.propCountName} = ${defaultValue.length};`);
         this.print(`${this.propName} = (${type}*) malloc(sizeof(${type}) * ${this.propCountName});`);
 
         defaultValue.forEach((el: string | number, index: number) => {
@@ -60,25 +75,12 @@ class ConfigAllocatorGenerator extends ConfigGenerator {
     }
 
     /**
-     * The template comment that this generator handles.
-     */
-    protected comment = '{{GENERATE_CONFIG_ALLOCATOR}}';
-    /**
      * The function that generates the code and assigns it to the code field.
      */
     protected generate(): void {
         this.parse(this.config, `config`);
     }
 
-    /**
-     * The constructor of the ConfigAllocatorGenerator class.
-     * @param structure The structure model: the generated code will not actually depend on it.
-     * @param config The config model: the generated code will depend on it.
-     */
-    constructor(structure: StructureModel, config: ConfigModel) {
-        super(structure, config);
-        this.generate();
-    }
 }
 
 export { ConfigAllocatorGenerator as generator };

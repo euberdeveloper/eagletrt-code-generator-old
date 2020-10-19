@@ -7,17 +7,33 @@ import { ConfigGenerator } from './configGenerator';
 class ConfigTypeGenerator extends ConfigGenerator {
 
     /**
+     * The template comment that this generator handles.
+     */
+    protected comment = '{{GENERATE_CONFIG_TYPE}}';
+
+    /**
      * The current indentation as number of tabs.
      */
     private indentation = 0;
     /**
      * The array of generated structs.
      */
-    private structs: string[] = [];
+    private readonly structs: string[] = [];
     /**
      * The index of the struct that is being currently generated.
      */
     private cursor = -1;
+    
+    /**
+     * The constructor of the ConfigTypeGenerator class.
+     * @param structure The structure model: the generated code will not actually depend on it.
+     * @param config The config model: the generated code will depend on it.
+     */
+    public constructor(structure: StructureModel, config: ConfigModel) {
+        super(structure, config);
+        this.generate();
+    }
+
 
     /**
      * Prints the given string to the current cursor, formatting it.
@@ -95,25 +111,11 @@ class ConfigTypeGenerator extends ConfigGenerator {
     }
 
     /**
-     * The template comment that this generator handles.
-     */
-    protected comment = '{{GENERATE_CONFIG_TYPE}}';
-    /**
      * The function that generates the code and assigns it to the code field.
      */
     protected generate(): void {
         this.parse(this.config, 'config_t');
         this.code = this.structs.reverse().join('\n');
-    }
-
-    /**
-     * The constructor of the ConfigTypeGenerator class.
-     * @param structure The structure model: the generated code will not actually depend on it.
-     * @param config The config model: the generated code will depend on it.
-     */
-    constructor(structure: StructureModel, config: ConfigModel) {
-        super(structure, config);
-        this.generate();
     }
 
 }

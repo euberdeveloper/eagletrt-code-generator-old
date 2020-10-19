@@ -56,7 +56,7 @@ export class StructureGenerator extends Generator {
      * @param structure The structure model: the generated code will depend on it.
      * @param config The config model: the generated code will not actually depend on it.
      */
-    constructor(structure: StructureModel, config: ConfigModel) {
+    public constructor(structure: StructureModel, config: ConfigModel) {
         super(structure, config);
     }
 

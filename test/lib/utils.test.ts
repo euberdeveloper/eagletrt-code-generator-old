@@ -76,35 +76,31 @@ describe('Utils', function() {
             logger.info('', ' ', false);
 
             res = `${chalk.bold.red('[ERROR]')} `;
-            logger.error('', '', false);
             logger.error('', undefined, false);
             res = `${chalk.bold.green('[SUCCESS]')} `;
-            logger.succ('', '', false);
             logger.succ('', undefined, false);
             res = `${chalk.bold.yellow('[WARNING]')} `;
-            logger.warn('', '', false);
             logger.warn('', undefined, false);
             res = `${chalk.bold.blue('[INFO]')} `;
-            logger.info('', '', false);
             logger.info('', undefined, false);
 
             res = `${chalk.bold.red('[ERROR]')} ${chalk.bold.italic.blue('test.txt')}`;
-            logger.error('test.txt', '', true);
+            logger.error('test.txt', undefined, true);
             res = `${chalk.bold.green('[SUCCESS]')} ${chalk.bold.italic.blue('test.txt')}`;
-            logger.succ('test.txt', '', true);
+            logger.succ('test.txt', undefined, true);
             res = `${chalk.bold.yellow('[WARNING]')} ${chalk.bold.italic.blue('test.txt')}`;
-            logger.warn('test.txt', '', true);
+            logger.warn('test.txt', undefined, true);
             res = `${chalk.bold.blue('[INFO]')} ${chalk.bold.italic.blue('test.txt')}`;
-            logger.info('test.txt', '', true);
+            logger.info('test.txt', undefined, true);
 
             res = `${chalk.bold.red('[ERROR]')} ${chalk.italic.hex('#C5C8C6')('path/')}${chalk.bold.italic.blue('test.txt')}`;
-            logger.error('path/test.txt', '', true);
+            logger.error('path/test.txt', undefined, true);
             res = `${chalk.bold.green('[SUCCESS]')} ${chalk.italic.hex('#C5C8C6')('path/')}${chalk.bold.italic.blue('test.txt')}`;
-            logger.succ('path/test.txt', '', true);
+            logger.succ('path/test.txt', undefined, true);
             res = `${chalk.bold.yellow('[WARNING]')} ${chalk.italic.hex('#C5C8C6')('path/')}${chalk.bold.italic.blue('test.txt')}`;
-            logger.warn('path/test.txt', '', true);
+            logger.warn('path/test.txt', undefined, true);
             res = `${chalk.bold.blue('[INFO]')} ${chalk.italic.hex('#C5C8C6')('path/')}${chalk.bold.italic.blue('test.txt')}`;
-            logger.info('path/test.txt', '', true);
+            logger.info('path/test.txt', undefined, true);
         });
 
     });
