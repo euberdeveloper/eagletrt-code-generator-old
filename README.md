@@ -6,9 +6,9 @@
 [![Types](https://img.shields.io/npm/types/eagletrt-code-generator.svg)](https://www.npmjs.com/package/eagletrt-code-generator)
 
 # eagletrt-code-generator
-Generate dinamically code for the (@eagletrt)[https://www.github.com/eagletrt] telemetry
+Generate dinamically code for the [@eagletrt](https://www.github.com/eagletrt) telemetry
 
-**Note**: This repository has been moved to the (eagletrt)[https://github.com/eagletrt/eagletrt-code-generator] organization.
+**Note**: This repository has been moved to the [eagletrt](https://github.com/eagletrt/eagletrt-code-generator) organization.
 
 ## Project purpose
 
