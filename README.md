@@ -8,6 +8,8 @@
 # eagletrt-code-generator
 Generate dinamically code for the [@eagletrt](https://www.github.com/eagletrt) telemetry
 
+**Note**: This repository has been moved to the (eagletrt)[https://github.com/eagletrt/eagletrt-code-generator] organization.
+
 ## Project purpose
 
 This project is an **npm** package made for the **telemetry** of eagletrt. The telemetry consists in a **c program** located in a **Raspberry Pi** and attached to the canbus of the car and to a rover-gps. Its job is reading all the sensors **messages**, forwarding them via mqtt and saving them in a local mongodb database. In particular, all messages are **accumulated** in a **structure** for some hundreds of milliseconds, the structure is parsed to **bson** and then it is sent via mqtt and saved in the database. After that the process starts again. The problem is that c is a **statically typed** programming language while the structure of the saved data **changes very frequently** and is quite **articulated**. Changing the c struct and the bson parser every time that the structure was modified was a **hell**. Hence this project was made. I started thinking that there exist some **dynamically typed** languages, such as **typescript**. The structure of the saved data is now represented in a **json** file and there is this **nodejs** module that reads that json file and **generates the c code that depends on it**. So now **we just need to change that json file and execute this module, saving hours of time**. In the second version, this method has been applied to the **config parser** as well.
