@@ -1,14 +1,13 @@
+# 301 - This repository has been moved to the [eagletrt](https://github.com/eagletrt/eagletrt-code-generator) organization.
+
 [![Build Status](https://travis-ci.org/euberdeveloper/eagletrt-code-generator.svg?branch=master)](https://travis-ci.org/euberdeveloper/eagletrt-code-generator)
 [![Coverage Status](https://coveralls.io/repos/github/euberdeveloper/eagletrt-code-generator/badge.svg?branch=master)](https://coveralls.io/github/euberdeveloper/eagletrt-code-generator?branch=master)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-[![dependencies Status](https://david-dm.org/euberdeveloper/eagletrt-code-generator/status.svg)](https://david-dm.org/euberdeveloper/eagletrt-code-generator)
 [![License](https://img.shields.io/npm/l/eagletrt-code-generator.svg)](https://github.com/euberdeveloper/eagletrt-code-generator/blob/master/LICENSE)
 [![Types](https://img.shields.io/npm/types/eagletrt-code-generator.svg)](https://www.npmjs.com/package/eagletrt-code-generator)
 
 # eagletrt-code-generator
 Generate dinamically code for the [@eagletrt](https://www.github.com/eagletrt) telemetry
-
-**Note**: This repository has been moved to the [eagletrt](https://github.com/eagletrt/eagletrt-code-generator) organization.
 
 ## Project purpose
 
